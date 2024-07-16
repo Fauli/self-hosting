@@ -13,6 +13,8 @@
 
 # Introduction
 
+<img src=".attachements/sloth-hosting.png" width="250"> <!-- Adjust width as needed -->
+
 In order to host services I need, I'm using the here described setup.
 This is a living document so far and should only be seen as collection of my ideas 😁
 
