@@ -84,6 +84,10 @@ The Kubernetes nodes are connected via the physical ports on the router.
 
 # Additional Thoughts
 
+## Gateway API
+
+Maybe worth from the start?
+
 ## Cloudflare
 
 Or some other service?
