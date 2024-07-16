@@ -78,3 +78,12 @@ The Kubernetes nodes are connected via the physical ports on the router.
 | What    | Service     | Description |
 | ------- | ----------- | ----------- |
 | Ingress | using nginx |             |
+
+
+# Additional Thoughts
+
+## Cloudflare
+
+## PXE Boot
+
+''
