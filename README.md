@@ -48,7 +48,7 @@ The Kubernetes nodes are connected via the physical ports on the router.
 
 ## Logical network diagram
 
-![Network Diagram](.attachements/Network-diagram.png)
+![Network Diagram](.attachements/Network-Diagram.png)
 
 ## Firewall rules
 
