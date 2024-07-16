@@ -86,6 +86,8 @@ The Kubernetes nodes are connected via the physical ports on the router.
 
 ## Cloudflare
 
-## PXE Boot
+Or some other service?
 
-''
+## PXE Boot
+
+Makes life easier maybe?
