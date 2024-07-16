@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" modified="2024-07-16T18:07:40.148Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:127.0) Gecko/20100101 Firefox/127.0" etag="LTiKYfZJNo8SfApBq3hl" version="24.6.5" type="device">
+  <diagram name="Page-1" id="bcNJMhatOZ0sZVu_zxhw">
+    <mxGraphModel dx="1026" dy="625" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-1" value="Router" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="361" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-2" value="&lt;div&gt;Internet&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="361" y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-3" value="VLAN 10" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="80" y="260" width="260" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-4" value="&lt;div&gt;VLAN 20&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="500" y="259" width="260" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-5" value="Personal Hardware" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="364" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-6" value="Server 1.1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-7" value="Personal Hardware" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-8" value="Server 1.2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="364" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-9" value="&lt;div&gt;....&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-10" value="...." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-13" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="nCdiumUnFe-sobkJ3sBV-3" target="nCdiumUnFe-sobkJ3sBV-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="350" as="sourcePoint" />
+            <mxPoint x="450" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-14" value="Specific traffic allowed through firewall" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="395" y="424" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-16" value="" style="endArrow=none;html=1;rounded=0;entryX=0.55;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="nCdiumUnFe-sobkJ3sBV-1" target="nCdiumUnFe-sobkJ3sBV-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="350" as="sourcePoint" />
+            <mxPoint x="450" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-17" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="nCdiumUnFe-sobkJ3sBV-7" target="nCdiumUnFe-sobkJ3sBV-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="350" as="sourcePoint" />
+            <mxPoint x="450" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nCdiumUnFe-sobkJ3sBV-18" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="nCdiumUnFe-sobkJ3sBV-6" target="nCdiumUnFe-sobkJ3sBV-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="350" as="sourcePoint" />
+            <mxPoint x="450" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
