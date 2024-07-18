@@ -131,8 +131,44 @@ add chain=forward action=drop in-interface=VLAN20 out-interface=VLAN10  # drop t
 | What    | Service     | Description |
 | ------- | ----------- | ----------- |
 | Ingress | using nginx |             |
+| Metrics | Grafana & Prometheus |   |
+| Security validation | kube-bench |  |
+| Admin | kubernetes dashboard | | 
 
 # Additional Thoughts
+
+## Make wireguard great again
+
+```bash
+/interface wireguard
+add name=wg0 listen-port=13337 private-key="HIDDEN_DATA"
+
+/ip address
+add address=192.168.99.1/24 interface=wg0
+
+/interface wireguard peers
+add public-key="peerPublicKey" allowed-address=192.168.99.2/32 interface=wg0
+
+/ip route
+add dst-address=192.168.10.0/24 gateway=192.168.99.1
+add dst-address=192.168.20.0/24 gateway=192.168.99.1
+
+/ip firewall filter
+add chain=input action=accept protocol=udp port=51820
+add chain=forward action=accept in-interface=wg0 out-interface=VLAN10
+add chain=forward action=accept in-interface=wg0 out-interface=VLAN20
+
+/ip firewall nat
+add action=masquerade chain=srcnat out-interface=wg0
+```
+
+## Image registry on the NAS
+
+Is that smart? Where else?
+
+## Use cilium to protect network further
+
+Do it
 
 ## Gateway API
 
