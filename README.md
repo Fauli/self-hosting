@@ -92,7 +92,7 @@ add address=10.13.37.1/24 interface=VLAN20
 
 /ip pool
 add name=pool10 ranges=192.168.10.10-192.168.10.100
-add name=pool20 ranges=192.168.20.10-192.168.20.100
+add name=pool20 ranges=10.13.37.10-10.13.37.100
 
 /ip dhcp-server
 add name=dhcp10 interface=VLAN10 address-pool=pool10 disabled=no
@@ -100,7 +100,7 @@ add name=dhcp20 interface=VLAN20 address-pool=pool20 disabled=no
 
 /ip dhcp-server network
 add address=192.168.10.0/24 gateway=192.168.10.1 
-add address=192.168.20.0/24 gateway=192.168.20.1 
+add address=10.13.37.0/24 gateway=10.13.37.1 
 
 ## setup firewall rules
 /ip firewall filter
