@@ -151,7 +151,7 @@ add public-key="peerPublicKey" allowed-address=192.168.99.2/32 interface=wg0
 
 /ip route
 add dst-address=192.168.10.0/24 gateway=192.168.99.1
-add dst-address=192.168.20.0/24 gateway=192.168.99.1
+add dst-address=10.13.37.0/24 gateway=192.168.99.1
 
 /ip firewall filter
 add chain=input action=accept protocol=udp port=51820
