@@ -141,13 +141,13 @@ add chain=forward action=drop in-interface=VLAN20 out-interface=VLAN10  # drop t
 
 ```bash
 /interface wireguard
-add name=wg0 listen-port=13337 private-key="HIDDEN_DATA"
+add name=wireguard0 listen-port=13337 private-key="HIDDEN_DATA"
 
 /ip address
-add address=192.168.99.1/24 interface=wg0
+add address=192.168.99.1/24 interface=wireguard0
 
 /interface wireguard peers
-add public-key="peerPublicKey" allowed-address=192.168.99.2/32 interface=wg0
+add public-key="peerPublicKey" allowed-address=192.168.99.2/32 interface=wireguard0
 
 /ip route
 add dst-address=192.168.10.0/24 gateway=192.168.99.1
@@ -155,11 +155,11 @@ add dst-address=10.13.37.0/24 gateway=192.168.99.1
 
 /ip firewall filter
 add chain=input action=accept protocol=udp port=51820
-add chain=forward action=accept in-interface=wg0 out-interface=VLAN10
-add chain=forward action=accept in-interface=wg0 out-interface=VLAN20
+add chain=forward action=accept in-interface=wireguard0 out-interface=VLAN10
+add chain=forward action=accept in-interface=wireguard0 out-interface=VLAN20
 
 /ip firewall nat
-add action=masquerade chain=srcnat out-interface=wg0
+add action=masquerade chain=srcnat out-interface=wireguard0
 ```
 
 ## Image registry on the NAS
