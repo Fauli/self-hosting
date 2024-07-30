@@ -67,27 +67,22 @@ The Kubernetes nodes are connected via the physical ports on the router.
 add name=pc-bridge
 add name=k8s-bridge
 
-## now add the bridgets to the VLANs
-/interface vlan
-add name=VLAN10 vlan-id=10 interface=pc-bridge
-add name=VLAN20 vlan-id=20 interface=k8s-bridge
-
 /interface/list/member
 add list=LAN interface=pc-bridge
 add list=LAN interface=k8s-bridge
 
 # give the attached clients IPs using DHCP
 /ip address
-add address=192.168.10.1/24 interface=VLAN10
-add address=10.13.37.1/24 interface=VLAN20
+add address=192.168.10.1/24 interface=pc-bridge
+add address=10.13.37.1/24 interface=k8s-bridge
 
 /ip pool
 add name=pool10 ranges=192.168.10.10-192.168.10.100
 add name=pool20 ranges=10.13.37.10-10.13.37.100
 
 /ip dhcp-server
-add name=dhcp10 interface=VLAN10 address-pool=pool10 disabled=no
-add name=dhcp20 interface=VLAN20 address-pool=pool20 disabled=no
+add name=dhcp10 interface=pc-bridge address-pool=pool10 disabled=no
+add name=dhcp20 interface=k8s-bridge address-pool=pool20 disabled=no
 
 /ip dhcp-server network
 add address=192.168.10.0/24 gateway=192.168.10.1 
@@ -95,13 +90,13 @@ add address=10.13.37.0/24 gateway=10.13.37.1
 
 ## setup firewall rules
 /ip firewall filter
-add chain=forward action=accept in-interface=VLAN10 out-interface=VLAN20 protocol=tcp dst-port=8006 # proxmos interface
-add chain=forward action=accept in-interface=VLAN10 out-interface=VLAN20 protocol=tcp dst-port=22 # SSH access
-add chain=forward action=accept in-interface=VLAN10 out-interface=VLAN20 protocol=tcp dst-port=6443 # k8s api server
-add chain=forward action=accept in-interface=VLAN10 out-interface=VLAN20 protocol=tcp dst-port=30000-32767 # exposed services
-add chain=forward action=accept in-interface=VLAN20 out-interface=VLAN10 protocol=tcp dst-port=2049 # NFSv4
-add chain=forward action=drop in-interface=VLAN10 out-interface=VLAN20  # drop the rest
-add chain=forward action=drop in-interface=VLAN20 out-interface=VLAN10  # drop the rest
+add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=8006 # proxmos interface
+add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=22 # SSH access
+add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=6443 # k8s api server
+add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=30000-32767 # exposed services
+add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=2049 # NFSv4
+add chain=forward action=drop in-interface=pc-bridge out-interface=k8s-bridge  # drop the rest
+add chain=forward action=drop in-interface=k8s-bridge out-interface=pc-bridge  # drop the rest
 
 ## map the ports to the actual bridges
 /interface bridge port
