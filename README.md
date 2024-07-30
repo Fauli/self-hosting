@@ -39,7 +39,7 @@ The Kubernetes nodes are connected via the physical ports on the router.
 | Interface 4  | Personal  | 10   | pc-bridge  |
 | Interface 5  | Personal  | 10   | pc-bridge  |
 | Interface 6  | Personal  | 10   | pc-bridge  |
-| Interface 7  |           | 10   | pc-bridge  |
+| Interface 7  | Cluster   | 10   | k8s-bridge |
 | Interface 8  | Cluster   | 20   | k8s-bridge |
 | Interface 9  | Cluster   | 20   | k8s-bridge |
 | Interface 10 | Cluster   | 20   | k8s-bridge |
@@ -67,20 +67,7 @@ The Kubernetes nodes are connected via the physical ports on the router.
 add name=pc-bridge
 add name=k8s-bridge
 
-## map the ports to the actual bridges
-/interface bridge port
-add bridge=pc-bridge interface=ether1
-add bridge=pc-bridge interface=ether2
-add bridge=pc-bridge interface=ether3
-add bridge=pc-bridge interface=ether4
-add bridge=pc-bridge interface=ether5
-add bridge=pc-bridge interface=ether6
-add bridge=pc-bridge interface=ether7
-add bridge=k8s-bridge interface=ether8
-add bridge=k8s-bridge interface=ether9
-add bridge=k8s-bridge interface=ether10
-
-## nor add the bridgets to the VLANs
+## now add the bridgets to the VLANs
 /interface vlan
 add name=VLAN10 vlan-id=10 interface=pc-bridge
 add name=VLAN20 vlan-id=20 interface=k8s-bridge
@@ -111,6 +98,19 @@ add chain=forward action=accept in-interface=VLAN10 out-interface=VLAN20 protoco
 add chain=forward action=accept in-interface=VLAN20 out-interface=VLAN10 protocol=tcp dst-port=2049 # NFSv4
 add chain=forward action=drop in-interface=VLAN10 out-interface=VLAN20  # drop the rest
 add chain=forward action=drop in-interface=VLAN20 out-interface=VLAN10  # drop the rest
+
+## map the ports to the actual bridges
+/interface bridge port
+set [find interface=ether1] bridge=pc-bridge
+set [find interface=ether2] bridge=pc-bridge
+set [find interface=ether3] bridge=pc-bridge
+set [find interface=ether4] bridge=pc-bridge
+set [find interface=ether5] bridge=pc-bridge
+set [find interface=ether6] bridge=pc-bridge
+set [find interface=ether7] bridge=k8s-bridge
+set [find interface=ether8] bridge=k8s-bridge
+set [find interface=ether9] bridge=k8s-bridge
+set [find interface=ether10] bridge=k8s-bridge
 ```
 
 # Kubernetes
