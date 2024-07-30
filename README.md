@@ -72,6 +72,10 @@ add name=k8s-bridge
 add name=VLAN10 vlan-id=10 interface=pc-bridge
 add name=VLAN20 vlan-id=20 interface=k8s-bridge
 
+/interface/list/member
+add list=LAN interface=pc-bridge
+add list=LAN interface=k8s-bridge
+
 # give the attached clients IPs using DHCP
 /ip address
 add address=192.168.10.1/24 interface=VLAN10
