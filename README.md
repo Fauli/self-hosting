@@ -88,15 +88,25 @@ add name=dhcp20 interface=k8s-bridge address-pool=pool20 disabled=no
 add address=192.168.10.0/24 gateway=192.168.10.1 
 add address=10.13.37.0/24 gateway=10.13.37.1 
 
+/ip firewall address-list
+add address=192.168.10.0/24 list=pc-bridge-list
+add address=10.13.37.0/24 list=k8s-bridge-list
+add address=192.168.10.10-192.168.10.100 list=allow-to-router
+
 ## setup firewall rules
 /ip firewall filter
-add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=8006 # proxmos interface
-add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=22 # SSH access
-add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=6443 # k8s api server
-add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=30000-32767 # exposed services
-add chain=forward action=accept in-interface=pc-bridge out-interface=k8s-bridge protocol=tcp dst-port=2049 # NFSv4
-add chain=forward action=drop in-interface=pc-bridge out-interface=k8s-bridge  # drop the rest
-add chain=forward action=drop in-interface=k8s-bridge out-interface=pc-bridge  # drop the rest
+add action=accept chain=forward comment="Proxmod Admin Interface Access" dst-address-list=k8s-bridge-list dst-port=8006 protocol=tcp src-address-list=pc-bridge-list
+add action=accept chain=forward comment="SSH access to k8s" connection-state="" dst-address-list=k8s-bridge-list dst-port=22 protocol=tcp src-address-list=pc-bridge-list
+add action=accept chain=forward comment="k89s api access" dst-address-list=k8s-bridge-list dst-port=6443 protocol=tcp src-address-list=pc-bridge-list
+add action=accept chain=forward comment="k8s svc access" dst-address-list=k8s-bridge-list dst-port=30000-32767 protocol=tcp src-address-list=pc-bridge-list
+add action=accept chain=forward comment="k8s to syno NFSv4" dst-address-list=pc-bridge-list dst-port=2049 protocol=tcp src-address-list=k8s-bridge-list
+add action=accept chain=forward comment="allow established connections" connection-state=established,related dst-address-list=k8s-bridge-list src-address-list=pc-bridge-list
+add action=accept chain=forward comment="allow established connections" connection-state=established,related dst-address-list=pc-bridge-list src-address-list=k8s-bridge-list
+add action=drop chain=forward disabled=yes in-interface=pc-bridge log=yes log-prefix=DROP-BRIDGE out-interface=bridge
+add action=drop chain=forward disabled=yes in-interface=k8s-bridge out-interface=bridge
+add action=drop chain=forward comment="drop the rest" dst-address-list=k8s-bridge-list src-address-list=pc-brige-list
+add action=drop chain=forward comment="drop the rest" dst-address-list=pc-brige-list log=yes log-prefix=DROP-K8S-TO-PC src-address-list=k8s-bridge-list
+
 
 ## map the ports to the actual bridges
 /interface bridge port
@@ -153,9 +163,12 @@ add dst-address=192.168.10.0/24 gateway=192.168.99.1
 add dst-address=10.13.37.0/24 gateway=192.168.99.1
 
 /ip firewall filter
-add chain=input action=accept protocol=udp port=51820
-add chain=forward action=accept in-interface=wireguard0 out-interface=VLAN10
-add chain=forward action=accept in-interface=wireguard0 out-interface=VLAN20
+add action=accept chain=input comment="allow wireguard" dst-port=13231 log-prefix=allow-wireguard protocol=udp
+add action=accept chain=input comment="wireguard traffic" in-interface=wireguard1 log-prefix=allow-wireguard-traffic protocol=udp
+add action=accept chain=forward comment="router to wireguard" dst-address=192.168.100.0/24 log-prefix=router-to-wireguard src-address=192.168.10.0/24
+add action=accept chain=forward comment="wireguard to router" dst-address=192.168.10.0/24 log-prefix=wireguard-to-router src-address=192.168.100.0/24
+add action=accept chain=forward comment="k8s to wirguard" dst-address=192.168.100.0/24 src-address=10.13.37.0/24
+add action=accept chain=forward comment="wireguard to k8s" dst-address=10.13.37.0/24 src-address=192.168.100.0/24
 
 /ip firewall nat
 add action=masquerade chain=srcnat out-interface=wireguard0
