@@ -100,6 +100,8 @@ add action=accept chain=forward comment="Proxmod Admin Interface Access" dst-add
 add action=accept chain=forward comment="SSH access to k8s" connection-state="" dst-address-list=k8s-bridge-list dst-port=22 protocol=tcp src-address-list=pc-bridge-list
 add action=accept chain=forward comment="k89s api access" dst-address-list=k8s-bridge-list dst-port=6443 protocol=tcp src-address-list=pc-bridge-list
 add action=accept chain=forward comment="k8s svc access" dst-address-list=k8s-bridge-list dst-port=30000-32767 protocol=tcp src-address-list=pc-bridge-list
+add action=accept chain=forward comment="connection to ingress http" dst-address-list=k8s-bridge-list dst-port=80 protocol=tcp src-address-list=pc-bridge-list
+add action=accept chain=forward comment="connection to ingress https" dst-address-list=k8s-bridge-list dst-port=443 protocol=tcp src-address-list=pc-bridge-list
 add action=accept chain=forward comment="k8s to syno NFSv4" dst-address-list=pc-bridge-list dst-port=2049 protocol=tcp src-address-list=k8s-bridge-list
 add action=accept chain=forward comment="allow established connections" connection-state=established,related dst-address-list=k8s-bridge-list src-address-list=pc-bridge-list
 add action=accept chain=forward comment="allow established connections" connection-state=established,related dst-address-list=pc-bridge-list src-address-list=k8s-bridge-list
