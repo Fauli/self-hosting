@@ -1,0 +1,20 @@
+controller:
+  replicaCount: 2
+  ingressClass: nginx
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: 100m
+      memory: 90Mi
+    limits:
+      cpu: 200m
+      memory: 180Mi
+  config:
+    hsts: "true"
+    ssl-redirect: "true"
+    ssl-protocols: "TLSv1.2 TLSv1.3"
+
+  # sslPassthrough: true
+  # extraArgs:
+  #   enable-ssl-passthrough: ""

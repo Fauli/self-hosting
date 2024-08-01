@@ -24,6 +24,7 @@ This is a living document so far and should only be seen as collection of my ide
 | ------- | --------------------------- | ----------------------------------------------------------------- |
 | Router  | Mikrotik RB4011iGS+         | Latest firmware, central network switch and router for the setup  |
 | Servers | 3x Lenovo ThinkCentre M710s | Intel Core i7-7700 <br />64 GB Memory                             |
+| Servers | HP Proliant D20 G9          |                                                   |
 
 # Network Setup
 
@@ -216,8 +217,27 @@ k get nodes
 
 ## ArgoCD
 
-Why not? :)
+Install ArgoCD using the below commands:
+```bash
+## Ensure helm and arcocd cli are insstalled
+brew install helm
+brew install argocd
 
+k create ns argo-cd
+helm install argo-cd argo/argo-cd
+
+kubectl port-forward service/argo-cd-argocd-server -n argo-cd 8080:443
+argocd login localhost:8080 --insecure --username admin --password $(kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+
+## configure argo cd
+argocd proj create fauli --description "Project Fauli"
+argocd repo add https://helm.nginx.com/stable --type helm --name nginx-stable
+argocd repo add https://github.com/Fauli/self-hosting.git --type git --name fauli
+
+argocd app create ingress-nginx --repo fauli --path argo/nginx --project fauli 
+
+
+```
 
 ## Image registry on the NAS
 
