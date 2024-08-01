@@ -238,9 +238,11 @@ argocd login localhost:8080 --insecure --username admin --password $(kubectl -n 
 
 ## configure argo cd
 argocd proj create fauli --description "Project Fauli"
-argocd repo add https://helm.nginx.com/stable --type helm --name nginx-stable
 argocd repo add https://github.com/Fauli/self-hosting.git --type git --name fauli
+```
 
+You can than add needed apps that will be managed by argo
+```bash
 # essentials
 argocd app create metallb --repo https://github.com/Fauli/self-hosting.git --path argo/metallb  --dest-server https://kubernetes.default.svc
 argocd app create ingress-nginx --repo https://github.com/Fauli/self-hosting.git --path argo/nginx  --dest-server https://kubernetes.default.svc
@@ -254,9 +256,8 @@ argocd app create postgres-ui --repo https://github.com/Fauli/self-hosting.git -
 # tools
 argocd app create kanboard --repo https://github.com/Fauli/self-hosting.git --path argo/kanboard  --dest-server https://kubernetes.default.svc
 argocd app create babybuddy --repo https://github.com/Fauli/self-hosting.git --path argo/babybuddy  --dest-server https://kubernetes.default.svc
-
-
 ```
+
 
 ## Image registry on the NAS
 
