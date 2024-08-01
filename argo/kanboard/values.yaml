@@ -28,12 +28,12 @@ ingress:
 # env: {}
 #   # MYSQL_DATABASE: kanboard
 
-# service:
-#   port:
-#     port: 80
-#   additionalPorts:
-#     - name: "443-tcp"
-#       port: 443
+service:
+  port:
+    port: 80
+  additionalPorts:
+    - name: "443-tcp"
+      port: 443
 
 # ingress:
 #   enabled: true
