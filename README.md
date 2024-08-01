@@ -243,6 +243,7 @@ argocd repo add https://github.com/Fauli/self-hosting.git --type git --name faul
 
 argocd app create metallb --repo https://github.com/Fauli/self-hosting.git --path argo/metallb  --dest-server https://kubernetes.default.svc
 argocd app create ingress-nginx --repo https://github.com/Fauli/self-hosting.git --path argo/nginx  --dest-server https://kubernetes.default.svc
+argocd app create postgres --repo https://github.com/Fauli/self-hosting.git --path argo/postgres-operator  --dest-server https://kubernetes.default.svc
 argocd app create kanboard --repo https://github.com/Fauli/self-hosting.git --path argo/kanboard  --dest-server https://kubernetes.default.svc
 
 ```
