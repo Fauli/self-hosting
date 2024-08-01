@@ -174,6 +174,51 @@ add action=accept chain=forward comment="wireguard to k8s" dst-address=10.13.37.
 add action=masquerade chain=srcnat out-interface=wireguard0
 ```
 
+## Cluster Setup
+
+### Control Plane
+```bash
+export CONTROL_PLANE_IP=10.13.37.15  # IP of the first node
+export TALOSCONFIG=./talosconfig # Use local talos config file
+
+talosctl gen config fauli-cluster https://${CONTROL_PLANE_IP}:6443
+talosctl apply-config --insecure --nodes $CONTROL_PLANE_IP --file controlplane.yaml
+talosctl bootstrap --nodes $CONTROL_PLANE_IP --endpoints $CONTROL_PLANE_IP   # This is only needed once
+
+talosctl logs -n $CONTROL_PLANE_IP -e $CONTROL_PLANE_IP kubelet
+
+talosctl apply-config --insecure --nodes 10.13.37.25 --file controlplane.yaml
+talosctl apply-config --insecure --nodes 10.13.37.35 --file controlplane.yaml
+
+k get nodes
+#NAME            STATUS   ROLES           AGE   VERSION
+#talos-31u-8a4   Ready    control-plane   15m   v1.30.1
+#talos-5nh-9w5   Ready    control-plane   32m   v1.30.1
+#talos-l04-n03   Ready    control-plane   17m   v1.30.1
+```
+
+### Worker Nodes
+```bash
+talosctl apply-config --insecure --nodes 10.13.37.36 --file worker.yaml
+talosctl apply-config --insecure --nodes 10.13.37.36 --file worker.yaml
+talosctl apply-config --insecure --nodes 10.13.37.36 --file worker.yaml
+
+k get nodes
+#NAME            STATUS   ROLES           AGE   VERSION
+#talos-31u-8a4   Ready    control-plane   15m   v1.30.1
+#talos-5nh-9w5   Ready    control-plane   32m   v1.30.1
+#talos-600-8m2   Ready    <none>          78s   v1.30.1
+#talos-6xm-i4t   Ready    <none>          78s   v1.30.1
+#talos-l04-n03   Ready    control-plane   17m   v1.30.1
+#talos-lgi-es9   Ready    <none>          78s   v1.30.1
+
+```
+
+## ArgoCD
+
+Why not? :)
+
+
 ## Image registry on the NAS
 
 Is that smart? Where else?
