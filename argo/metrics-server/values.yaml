@@ -96,7 +96,8 @@ defaultArgs:
   - --kubelet-use-node-status-port
   - --metric-resolution=15s
 
-args: []
+args: 
+  - --kubelet-insecure-tls
 
 livenessProbe:
   httpGet:
