@@ -19,9 +19,9 @@
 # enableJsonLogging: false
 
 # # general configuration parameters
-# configGeneral:
+configGeneral:
 #   # the deployment should create/update the CRDs
-#   enable_crd_registration: true
+  enable_crd_registration: true
 #   # specify categories under which crds should be listed
 #   crd_categories:
 #   - "all"
