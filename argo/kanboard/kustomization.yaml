@@ -6,6 +6,10 @@ resources:
 
 namespace: kanboard
 
+spec:
+  destination:
+    server: https://kubernetes.default.svc  
+
 helmCharts:
 - name: kanboard
   version: "0.1.8"

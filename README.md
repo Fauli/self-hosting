@@ -225,6 +225,11 @@ brew install argocd
 
 k create ns argo-cd
 helm install argo-cd argo/argo-cd
+## Find a better way to do this, but for now:
+## add this: https://argo-cd.readthedocs.io/en/stable/user-guide/kustomize/#kustomizing-helm-charts
+# k edit -n argo-cd cm argocd-cm
+# data:
+#   kustomize.buildOptions: --enable-helm
 
 kubectl port-forward service/argo-cd-argocd-server -n argo-cd 8080:443
 argocd login localhost:8080 --insecure --username admin --password $(kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
@@ -234,8 +239,8 @@ argocd proj create fauli --description "Project Fauli"
 argocd repo add https://helm.nginx.com/stable --type helm --name nginx-stable
 argocd repo add https://github.com/Fauli/self-hosting.git --type git --name fauli
 
-argocd app create ingress-nginx --repo fauli --path argo/nginx --project fauli 
-
+argocd app create ingress-nginx --repo https://github.com/Fauli/self-hosting.git --path argo/nginx  --dest-server https://kubernetes.default.svc
+argocd app create kanboard --repo https://github.com/Fauli/self-hosting.git --path argo/kanboard  --dest-server https://kubernetes.default.svc
 
 ```
 
