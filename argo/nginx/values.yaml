@@ -15,6 +15,11 @@ controller:
     hsts: "true"
     ssl-redirect: "true"
     ssl-protocols: "TLSv1.2 TLSv1.3"
+  ingressClassResource:
+    enabled: true
+    name: nginx
+    default: true
+    controllerValue: "k8s.io/ingress-nginx"
 
   # sslPassthrough: true
   # extraArgs:
