@@ -60,6 +60,7 @@ ingress:
   #       - nextcloud.kube.home
   labels: {}
   path: /
+  host: cloud.fauli
   pathType: Prefix
 
 
