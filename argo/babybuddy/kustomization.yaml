@@ -8,7 +8,7 @@ namespace: babybuddy
 
 helmCharts:
 - name: babybuddy
-  version: "0.1.8"
+  version: "0.1.4"
   repo: https://nicholaswilde.github.io/helm-charts/
   releaseName: babybuddy
   valuesFile: values.yaml
