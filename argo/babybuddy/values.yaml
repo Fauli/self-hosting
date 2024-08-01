@@ -21,7 +21,12 @@
 #     port: 8000
 
 ingress:
-  enabled: false
+  enabled: true
+  hosts:
+    - host: "baby.fauli"
+      paths:
+         - path: /
+           pathType: Prefix
 
 persistence:
   config:
