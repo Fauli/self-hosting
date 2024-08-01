@@ -7,8 +7,8 @@ resources:
 namespace: postgres
 
 helmCharts:
-- name: postgres
+- name: postgres-operator
   version: "1.12.2"
   repo: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
-  releaseName: postgres
+  releaseName: postgres-operator
   valuesFile: values.yaml
