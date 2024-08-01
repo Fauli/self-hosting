@@ -241,10 +241,20 @@ argocd proj create fauli --description "Project Fauli"
 argocd repo add https://helm.nginx.com/stable --type helm --name nginx-stable
 argocd repo add https://github.com/Fauli/self-hosting.git --type git --name fauli
 
+# essentials
 argocd app create metallb --repo https://github.com/Fauli/self-hosting.git --path argo/metallb  --dest-server https://kubernetes.default.svc
 argocd app create ingress-nginx --repo https://github.com/Fauli/self-hosting.git --path argo/nginx  --dest-server https://kubernetes.default.svc
+argocd app create metrics-server --repo https://github.com/Fauli/self-hosting.git --path argo/metrics-server  --dest-server https://kubernetes.default.svc
+argocd app create prometheus --repo https://github.com/Fauli/self-hosting.git --path argo/prometheus  --dest-server https://kubernetes.default.svc
+
+# database
 argocd app create postgres --repo https://github.com/Fauli/self-hosting.git --path argo/postgres-operator  --dest-server https://kubernetes.default.svc
+argocd app create postgres-ui --repo https://github.com/Fauli/self-hosting.git --path argo/postgres-operator-ui  --dest-server https://kubernetes.default.svc
+
+# tools
 argocd app create kanboard --repo https://github.com/Fauli/self-hosting.git --path argo/kanboard  --dest-server https://kubernetes.default.svc
+argocd app create babybuddy --repo https://github.com/Fauli/self-hosting.git --path argo/babybuddy  --dest-server https://kubernetes.default.svc
+
 
 ```
 
