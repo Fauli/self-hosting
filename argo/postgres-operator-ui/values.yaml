@@ -42,8 +42,8 @@ envs:
   # IMPORTANT: While operator chart and UI chart are independent, this is the interface between
   # UI and operator API. Insert the service name of the operator API here!
   appUrl: "http://localhost:8081"
-  operatorApiUrl: "http://postgres-operator:8080"
-  operatorClusterNameLabel: "cluster-name"
+  operatorApiUrl: "http://postgres.postgres-operator.svc.cluster.local:8080"
+  operatorClusterNameLabel: "fauli-cluster"
   resourcesVisible: "False"
   # Set to "*" to allow viewing/creation of clusters in all namespaces
   targetNamespace: "default"
