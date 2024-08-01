@@ -3,7 +3,7 @@ controller:
   ingressClass: nginx
   service:
     type: LoadBalancer
-    loadBalancerIP: 10.13.37.137
+    #loadBalancerIP: 10.13.37.137
   resources:
     requests:
       cpu: 100m
