@@ -3,6 +3,9 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - crds/operatorconfigurations.yaml
+  - crds/postgresqls.yaml
+  - crds/postgresteams.yaml
 
 namespace: postgres
 

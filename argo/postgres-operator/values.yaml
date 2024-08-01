@@ -13,7 +13,7 @@
 # podAnnotations: {}
 # podLabels: {}
 
-# configTarget: "OperatorConfigurationCRD"
+configTarget: "OperatorConfigurationCRD"
 
 # # JSON logging format
 # enableJsonLogging: false
