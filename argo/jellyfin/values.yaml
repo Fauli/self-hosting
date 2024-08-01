@@ -33,6 +33,11 @@ ingress:
   # @default -- See values.yaml
   main:
     enabled: true
+    hosts:
+      - host: "jellyfin.fauli"
+        paths:
+          - path: /
+            pathType: Prefix
 
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
