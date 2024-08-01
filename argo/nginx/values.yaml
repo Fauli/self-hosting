@@ -12,9 +12,9 @@ controller:
       cpu: 200m
       memory: 180Mi
   config:
-    hsts: "true"
-    ssl-redirect: "true"
-    ssl-protocols: "TLSv1.2 TLSv1.3"
+    #hsts: "true"
+    #ssl-redirect: "true"
+    #ssl-protocols: "TLSv1.2 TLSv1.3"
   ingressClassResource:
     enabled: true
     name: nginx
