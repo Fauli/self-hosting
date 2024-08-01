@@ -6,10 +6,6 @@ resources:
 
 namespace: ingress-nginx
 
-spec:
-  destination:
-    server: https://kubernetes.default.svc  
-
 helmCharts:
 - name: ingress-nginx
   version: "4.11.1"
