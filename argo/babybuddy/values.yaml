@@ -16,9 +16,9 @@
 # env:
 #   TZ: "Switzerland/Zurich"
 
-service:
-  port:
-    port: 8000
+# service:
+#   port:
+#     port: 8000
 
 ingress:
   enabled: false
