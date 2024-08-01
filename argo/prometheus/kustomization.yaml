@@ -3,7 +3,16 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - crds/*
+  - crds/crd-alertmanagerconfigs.yaml
+  - crds/crd-alertmanagers.yaml
+  - crds/crd-podmonitors.yaml
+  - crds/crd-probes.yaml
+  - crds/crd-prometheusagents.yaml
+  - crds/crd-prometheuses.yaml
+  - crds/crd-prometheusrules.yaml
+  - crds/crd-scrapeconfigs.yaml
+  - crds/crd-servicemonitors.yaml
+  - crds/crd-thanosrulers.yaml
 
 namespace: prometheus
 
