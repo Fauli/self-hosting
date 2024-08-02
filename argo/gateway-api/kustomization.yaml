@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - manifests.yaml
+
+namespace: gateway-api
+
+helmCharts:
+- name: gateway-api
+  version: "v2024.3.18"
+  repo: https://charts.appscode.com/stable/
+  releaseName: gateway-api
+  valuesFile: values.yaml

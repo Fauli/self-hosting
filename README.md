@@ -245,7 +245,10 @@ argocd repo add https://github.com/Fauli/self-hosting.git --type git --name faul
 
 ### Configure Argo to snyc apps
 
-You can than add needed apps that will be managed by argo
+You can than add needed apps that will be managed by argo.
+
+All charts can be found under the `argo` folder in the repository.
+
 ```bash
 # essentials
 argocd app create metallb --repo https://github.com/Fauli/self-hosting.git --path argo/metallb  --dest-server https://kubernetes.default.svc
