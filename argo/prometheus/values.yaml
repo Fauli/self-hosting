@@ -2210,7 +2210,10 @@ prometheusOperator:
   ## Prometheus-Operator v0.39.0 and later support TLS natively.
   ##
   tls:
-    enabled: false
+    enabled: false   ### TODO: FRANZ: WHY can this not be true?
+    ### ts=2024-08-02T07:19:29.937305297Z caller=stdlib.go:105 caller=server.go:3416 msg="http: TLS handshake error from 10.244.1.0:31161: remote error: tls: bad certificate"
+    ### ts=2024-08-02T07:19:29.950012665Z caller=stdlib.go:105 caller=server.go:3416 msg="http: TLS handshake error from 10.244.1.0:36026: remote error: tls: bad certificate"
+    ### ts=2024-08-02T07:19:29.952453011Z caller=stdlib.go:105 caller=server.go:3416 msg="http: TLS handshake error from 10.244.1.0:40662: remote error: tls: bad certificate"
     # Value must match version names from https://golang.org/pkg/crypto/tls/#pkg-constants
     tlsMinVersion: VersionTLS13
     # The default webhook port is 10250 in order to work out-of-the-box in GKE private clusters and avoid adding firewall rules.
