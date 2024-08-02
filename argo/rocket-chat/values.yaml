@@ -16,7 +16,7 @@ imagePullSecrets: []
 
 ## Host for the application
 ## set it to a domain pointing to your loadbalancer
-# host:
+host: chat.fauli
 
 replicaCount: 1
 minAvailable: 1
@@ -110,7 +110,7 @@ externalMongodbOplogUrl: # mongodb://user:password@localhost:27017/local?replica
 ##
 mongodb:
   ## Enable or disable MongoDB dependency completely.
-  enabled: true
+  enabled: false
 
   initdbScriptsConfigMap: rocketchat-mongodb-fix-clustermonitor-role-configmap
 
@@ -134,7 +134,7 @@ mongodb:
     # key:
 
   persistence:
-    enabled: true
+    enabled: false  ## TODO: FRANZ check it!
     ## mongodb data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -142,7 +142,7 @@ mongodb:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    # storageClass: "nfs-csi-retain"
     accessMode: ReadWriteOnce
     size: 8Gi
 
@@ -152,7 +152,7 @@ mongodb:
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
-  enabled: false
+  enabled: false  ### TODO: FRANZ: checkk it!
   # existingClaim: existingClaimName
   ## rocketchat data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
@@ -161,9 +161,9 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: "nfs-csi-retain"
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 32Gi
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -194,9 +194,9 @@ serviceAccount:
 ### ref : http://kubernetes.io/docs/user-guide/ingress/
 ###
 ingress:
-  enabled: false
+  enabled: true
   pathType: Prefix
-  # ingressClassName: "nginx"
+  ingressClassName: "nginx"
   annotations:
     {}
     # kubernetes.io/ingress.class: "nginx"
