@@ -2210,7 +2210,7 @@ prometheusOperator:
   ## Prometheus-Operator v0.39.0 and later support TLS natively.
   ##
   tls:
-    enabled: true
+    enabled: false
     # Value must match version names from https://golang.org/pkg/crypto/tls/#pkg-constants
     tlsMinVersion: VersionTLS13
     # The default webhook port is 10250 in order to work out-of-the-box in GKE private clusters and avoid adding firewall rules.
