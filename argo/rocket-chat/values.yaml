@@ -1,108 +1,4 @@
-## common configuration across all deployments
-global:
-  # Tolerations for pod assignment
-  # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  tolerations: []
-  annotations: {}
-
-## Rocket Chat image version
-## ref: https://hub.docker.com/r/rocketchat/rocket.chat/tags
-##
-image:
-  repository: registry.rocket.chat/rocketchat/rocket.chat
-  pullPolicy: IfNotPresent
-
-imagePullSecrets: []
-
-## Host for the application
-## set it to a domain pointing to your loadbalancer
 host: chat.fauli
-
-replicaCount: 1
-minAvailable: 1
-
-smtp:
-  enabled: false
-  username:
-  password:
-  host:
-  port: 587
-
-# Extra env vars for Rocket.Chat:
-extraEnv:
-  # - name: MONGO_OPTIONS
-  #   value: '{"ssl": "true"}'
-  # - name: MONGO_OPLOG_URL
-  #   value: mongodb://oploguser:password@rocket-1:27017/local&replicaSet=rs0
-
-# Extra secret for Rocket.Chat, uncomment to use
-# Usefull to store sensitive data for creating initial user (e.g. ADMIN_* env vars) or custom OAUTH settings (e.g. Accounts_OAuth_Custom_* env vars)
-# extraSecret: "some-secret"
-  
-# Extra volumes for Rocket.Chat...
-extraVolumes:
-  # - name: etc-certs
-  #   hostPath:
-  #     path: /etc/ssl/certs
-  #     type: Directory
-  # - name: usr-certs
-  #   hostPath:
-  #     path: /usr/share/ca-certificates
-  #     type: Directory
-
-# ... and where they should be mounted inside the container
-extraVolumeMounts:
-  # - mountPath: /etc/ssl/certs
-  #   name: etc-certs
-  #   readOnly: true
-  # - mountPath: /usr/share/ca-certificates
-  #   name: usr-certs
-  #   readOnly: true
-
-# -- Containers, which are run before the app containers are started.
-extraInitContainers: []
-  # - name: init-myservice
-  #   image: busybox
-  #   command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
-
-## Specifies a Registration Token (obtainable at https://cloud.rocket.chat)
-#registrationToken: ""
-
-## Specifies an Enterprise License
-# license: ""
-
-## Pod anti-affinity can prevent the scheduler from placing RocketChat replicas on the same node.
-## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
-## The value "hard" means that the scheduler is *required* to not schedule two replica pods onto the same node.
-## The value "" will disable pod anti-affinity so that no anti-affinity rules will be configured.
-##
-podAntiAffinity: ""
-
-## If anti-affinity is enabled sets the topologyKey to use for anti-affinity.
-## This can be changed to, for example, failure-domain.beta.kubernetes.io/zone
-##
-podAntiAffinityTopologyKey: kubernetes.io/hostname
-
-## Assign custom affinity rules to the RocketChat instance
-## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-##
-affinity: {}
-# nodeAffinity:
-#   requiredDuringSchedulingIgnoredDuringExecution:
-#     nodeSelectorTerms:
-#     - matchExpressions:
-#       - key: kubernetes.io/e2e-az-name
-#         operator: In
-#         values:
-#         - e2e-az1
-#         - e2e-az2
-
-## Use an existing secret file with the MongoDB Url and OplogUrl
-existingMongodbSecret: ""
-
-## MongoDB URL if using an externally provisioned MongoDB
-externalMongodbUrl: # mongodb://user:password@localhost:27017/rocketchat
-externalMongodbOplogUrl: # mongodb://user:password@localhost:27017/local?replicaSet=rs0&authSource=admin
 
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
@@ -121,249 +17,374 @@ persistence:
   accessMode: ReadWriteOnce
   size: 32Gi
 
-## Configure resource requests and limits
-## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-##
-# resources:
-#   requests:
-#     memory: 512Mi
-#     cpu: 300m
 
-securityContext:
-  enabled: true
-  runAsUser: 999
-  fsGroup: 999
 
-serviceAccount:
-  # Specifies whether a ServiceAccount should be created
-  create: true
+# ## common configuration across all deployments
+# global:
+#   # Tolerations for pod assignment
+#   # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+#   tolerations: []
+#   annotations: {}
 
-  # Annotations to add to the ServiceAccount
-  annotations: {}
-  # eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/dummyRole
+# ## Rocket Chat image version
+# ## ref: https://hub.docker.com/r/rocketchat/rocket.chat/tags
+# ##
+# image:
+#   repository: registry.rocket.chat/rocketchat/rocket.chat
+#   pullPolicy: IfNotPresent
 
-  # The name of the ServiceAccount to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
+# imagePullSecrets: []
 
-## Configure the ingress object to hook into existing infastructure
-### ref : http://kubernetes.io/docs/user-guide/ingress/
-###
-ingress:
-  enabled: true
-  pathType: Prefix
-  ingressClassName: "nginx"
-  annotations:
-    {}
-    # kubernetes.io/ingress.class: "nginx"
-  path: /
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-  federation:
-    serveWellKnown: false
+# ## Host for the application
+# ## set it to a domain pointing to your loadbalancer
+# host: chat.fauli
 
-service:
-  annotations: {}
-  # service.beta.kubernetes.io/aws-load-balancer-internal: "0.0.0.0/0"
+# replicaCount: 1
+# minAvailable: 1
 
-  labels: {}
-  # key: value
+# smtp:
+#   enabled: false
+#   username:
+#   password:
+#   host:
+#   port: 587
 
-  ## ServiceType
-  ## ref: https://kubernetes.io/docs/user-guide/services/#publishing-services---service-types
-  type: ClusterIP
+# # Extra env vars for Rocket.Chat:
+# extraEnv:
+#   # - name: MONGO_OPTIONS
+#   #   value: '{"ssl": "true"}'
+#   # - name: MONGO_OPLOG_URL
+#   #   value: mongodb://oploguser:password@rocket-1:27017/local&replicaSet=rs0
 
-  ## Optional static port assignment for service type NodePort.
-  # nodePort: 30000
+# # Extra secret for Rocket.Chat, uncomment to use
+# # Usefull to store sensitive data for creating initial user (e.g. ADMIN_* env vars) or custom OAUTH settings (e.g. Accounts_OAuth_Custom_* env vars)
+# # extraSecret: "some-secret"
+  
+# # Extra volumes for Rocket.Chat...
+# extraVolumes:
+#   # - name: etc-certs
+#   #   hostPath:
+#   #     path: /etc/ssl/certs
+#   #     type: Directory
+#   # - name: usr-certs
+#   #   hostPath:
+#   #     path: /usr/share/ca-certificates
+#   #     type: Directory
 
-  port: 80
+# # ... and where they should be mounted inside the container
+# extraVolumeMounts:
+#   # - mountPath: /etc/ssl/certs
+#   #   name: etc-certs
+#   #   readOnly: true
+#   # - mountPath: /usr/share/ca-certificates
+#   #   name: usr-certs
+#   #   readOnly: true
 
-  ## Optional when LoadBalancer specified ServiceType.
-  loadBalancerIP: ""
+# # -- Containers, which are run before the app containers are started.
+# extraInitContainers: []
+#   # - name: init-myservice
+#   #   image: busybox
+#   #   command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
 
-## Optional custom labels for the deployment resource.
-deploymentLabels: {}
+# ## Specifies a Registration Token (obtainable at https://cloud.rocket.chat)
+# #registrationToken: ""
 
-## Optional Pod Labels.
-podLabels: {}
+# ## Specifies an Enterprise License
+# # license: ""
 
-## Optional Pod Annotations.
-podAnnotations:
-  {}
-  # prometheus.io/port: "9458"
-  # prometheus.io/path: "/metrics"
-  # prometheus.io/scrape: "true"
+# ## Pod anti-affinity can prevent the scheduler from placing RocketChat replicas on the same node.
+# ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
+# ## The value "hard" means that the scheduler is *required* to not schedule two replica pods onto the same node.
+# ## The value "" will disable pod anti-affinity so that no anti-affinity rules will be configured.
+# ##
+# podAntiAffinity: ""
 
-## Optional Prometheus scraping Settings
-prometheusScraping:
-  enabled: false
-  port: 9100 # Avoid using 9458: conflicts with Moleculer Exporter
+# ## If anti-affinity is enabled sets the topologyKey to use for anti-affinity.
+# ## This can be changed to, for example, failure-domain.beta.kubernetes.io/zone
+# ##
+# podAntiAffinityTopologyKey: kubernetes.io/hostname
 
-serviceMonitor:
-  ## serviceMonitor.enabled Create ServiceMonitor resource(s) for scraping metrics using PrometheusOperator
-  ## prometheusScraping.enabled should be also enabled
-  ##
-  enabled: false
+# ## Assign custom affinity rules to the RocketChat instance
+# ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+# ##
+# affinity: {}
+# # nodeAffinity:
+# #   requiredDuringSchedulingIgnoredDuringExecution:
+# #     nodeSelectorTerms:
+# #     - matchExpressions:
+# #       - key: kubernetes.io/e2e-az-name
+# #         operator: In
+# #         values:
+# #         - e2e-az1
+# #         - e2e-az2
 
-  # deprecated
-  #interval: 30s
+# ## Use an existing secret file with the MongoDB Url and OplogUrl
+# existingMongodbSecret: ""
 
-  # deprecated
-  #port: metrics
+# ## MongoDB URL if using an externally provisioned MongoDB
+# externalMongodbUrl: # mongodb://user:password@localhost:27017/rocketchat
+# externalMongodbOplogUrl: # mongodb://user:password@localhost:27017/local?replicaSet=rs0&authSource=admin
 
-  ## metrics.serviceMonitor.port The port names at which container exposes Prometheus metrics
-  ##
-  ports:
-    - metrics
-  ## metrics.serviceMonitor.intervals The intervals at which metrics should be scraped
-  ##
-  intervals:
-    - 30s
+# ## Enable persistence using Persistent Volume Claims
+# ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+# ##
+# persistence:
+#   enabled: false  ### TODO: FRANZ: checkk it!
+#   # existingClaim: existingClaimName
+#   ## rocketchat data Persistent Volume Storage Class
+#   ## If defined, storageClassName: <storageClass>
+#   ## If set to "-", storageClassName: "", which disables dynamic provisioning
+#   ## If undefined (the default) or set to null, no storageClassName spec is
+#   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+#   ##   GKE, AWS & OpenStack)
+#   ##
+#   storageClass: "synology-nfs-csi-retain"
+#   accessMode: ReadWriteOnce
+#   size: 32Gi
 
-## Liveness and readiness probe values
-## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
-##
-livenessProbe:
-  enabled: true
-  path: /health
-  initialDelaySeconds: 60
-  periodSeconds: 15
-  timeoutSeconds: 5
-  failureThreshold: 3
-  successThreshold: 1
+# ## Configure resource requests and limits
+# ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+# ##
+# # resources:
+# #   requests:
+# #     memory: 512Mi
+# #     cpu: 300m
 
-readinessProbe:
-  enabled: true
-  path: /health
-  initialDelaySeconds: 10
-  periodSeconds: 15
-  timeoutSeconds: 5
-  failureThreshold: 3
-  successThreshold: 1
+# securityContext:
+#   enabled: true
+#   runAsUser: 999
+#   fsGroup: 999
 
-podDisruptionBudget:
-  enabled: true
+# serviceAccount:
+#   # Specifies whether a ServiceAccount should be created
+#   create: true
 
-# # # # # # # # # # # # # # # # #
-#   M I C R O S E R V I C E S   #
-#  Only available to E.E users  #
-# # # # # # # # # # # # # # # # #
+#   # Annotations to add to the ServiceAccount
+#   annotations: {}
+#   # eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/dummyRole
 
-## Deploy as microservices?
-# Monolithic architecture, by default
-microservices:
-  enabled: false
+#   # The name of the ServiceAccount to use.
+#   # If not set and create is true, a name is generated using the fullname template
+#   name:
 
-  logLevel: warn
+# ## Configure the ingress object to hook into existing infastructure
+# ### ref : http://kubernetes.io/docs/user-guide/ingress/
+# ###
+# ingress:
+#   enabled: true
+#   pathType: Prefix
+#   ingressClassName: "nginx"
+#   annotations:
+#     {}
+#     # kubernetes.io/ingress.class: "nginx"
+#   path: /
+#   tls: []
+#   #  - secretName: chart-example-tls
+#   #    hosts:
+#   #      - chart-example.local
+#   federation:
+#     serveWellKnown: false
 
-  heartbeatInterval: 10
-  heartbeatTimeout: 30
+# service:
+#   annotations: {}
+#   # service.beta.kubernetes.io/aws-load-balancer-internal: "0.0.0.0/0"
 
-  ## Parameters for each deployment:
-  presence:
-    replicas: 1
-    image:
-      repository: rocketchat/presence-service
-      pullPolicy: IfNotPresent
-    securityContext: {}
-    resources: {}
-    # Tolerations for pod assignment
-    # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-    tolerations: []
+#   labels: {}
+#   # key: value
 
-  ddpStreamer:
-    replicas: 1
-    image:
-      repository: rocketchat/ddp-streamer-service
-      pullPolicy: IfNotPresent
-    securityContext: {}
-    resources: {}
-    # Tolerations for pod assignment
-    # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-    tolerations: []
+#   ## ServiceType
+#   ## ref: https://kubernetes.io/docs/user-guide/services/#publishing-services---service-types
+#   type: ClusterIP
 
-  account:
-    replicas: 1
-    image:
-      repository: rocketchat/account-service
-      pullPolicy: IfNotPresent
-    securityContext: {}
-    resources: {}
-    # Tolerations for pod assignment
-    # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-    tolerations: []
+#   ## Optional static port assignment for service type NodePort.
+#   # nodePort: 30000
 
-  authorization:
-    replicas: 1
-    image:
-      repository: rocketchat/authorization-service
-      pullPolicy: IfNotPresent
-    securityContext: {}
-    resources: {}
-    # Tolerations for pod assignment
-    # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-    tolerations: []
+#   port: 80
 
-  streamHub:
-    replicas: 1
-    image:
-      repository: rocketchat/stream-hub-service
-      pullPolicy: IfNotPresent
-    securityContext: {}
-    resources: {}
-    # Tolerations for pod assignment
-    # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-    tolerations: []
+#   ## Optional when LoadBalancer specified ServiceType.
+#   loadBalancerIP: ""
 
-  nats:
-    replicas: 1
+# ## Optional custom labels for the deployment resource.
+# deploymentLabels: {}
 
-  ## Parameters for each Kubernetes service
-  # NOTE: reserved for future usage still
-  presenceService:
-  ddpStreamerService:
-  natsService:
-  streamHubService:
-  accountService:
-  authorizationService:
+# ## Optional Pod Labels.
+# podLabels: {}
 
-nats:
-  nats:
-    image: nats:2.4-alpine
+# ## Optional Pod Annotations.
+# podAnnotations:
+#   {}
+#   # prometheus.io/port: "9458"
+#   # prometheus.io/path: "/metrics"
+#   # prometheus.io/scrape: "true"
 
-federation:
-  # host:
-  image:
-    repository: matrixdotorg
-    registry: docker.io
-    tag: latest
-  enabled: false
-  persistence:
-    enabled: false
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 10Gi
+# ## Optional Prometheus scraping Settings
+# prometheusScraping:
+#   enabled: false
+#   port: 9100 # Avoid using 9458: conflicts with Moleculer Exporter
 
-postgresql:
-  enabled: false
-  auth:
-    username: rocketchat
-    password: rocketchat
-    database: rocketchat
-  primary:
-    extraEnvVars:
-      - name: POSTGRES_INITDB_ARGS
-        value: "--lc-collate=C --lc-ctype=C"
+# serviceMonitor:
+#   ## serviceMonitor.enabled Create ServiceMonitor resource(s) for scraping metrics using PrometheusOperator
+#   ## prometheusScraping.enabled should be also enabled
+#   ##
+#   enabled: false
 
-# Tolerations for pod assignment
-# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-tolerations: []
+#   # deprecated
+#   #interval: 30s
 
-hooks:
-  preUpgrade:
-    podAnnotations: {}
-    podLabels: {}
+#   # deprecated
+#   #port: metrics
+
+#   ## metrics.serviceMonitor.port The port names at which container exposes Prometheus metrics
+#   ##
+#   ports:
+#     - metrics
+#   ## metrics.serviceMonitor.intervals The intervals at which metrics should be scraped
+#   ##
+#   intervals:
+#     - 30s
+
+# ## Liveness and readiness probe values
+# ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+# ##
+# livenessProbe:
+#   enabled: true
+#   path: /health
+#   initialDelaySeconds: 60
+#   periodSeconds: 15
+#   timeoutSeconds: 5
+#   failureThreshold: 3
+#   successThreshold: 1
+
+# readinessProbe:
+#   enabled: true
+#   path: /health
+#   initialDelaySeconds: 10
+#   periodSeconds: 15
+#   timeoutSeconds: 5
+#   failureThreshold: 3
+#   successThreshold: 1
+
+# podDisruptionBudget:
+#   enabled: true
+
+# # # # # # # # # # # # # # # # # #
+# #   M I C R O S E R V I C E S   #
+# #  Only available to E.E users  #
+# # # # # # # # # # # # # # # # # #
+
+# ## Deploy as microservices?
+# # Monolithic architecture, by default
+# microservices:
+#   enabled: false
+
+#   logLevel: warn
+
+#   heartbeatInterval: 10
+#   heartbeatTimeout: 30
+
+#   ## Parameters for each deployment:
+#   presence:
+#     replicas: 1
+#     image:
+#       repository: rocketchat/presence-service
+#       pullPolicy: IfNotPresent
+#     securityContext: {}
+#     resources: {}
+#     # Tolerations for pod assignment
+#     # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+#     tolerations: []
+
+#   ddpStreamer:
+#     replicas: 1
+#     image:
+#       repository: rocketchat/ddp-streamer-service
+#       pullPolicy: IfNotPresent
+#     securityContext: {}
+#     resources: {}
+#     # Tolerations for pod assignment
+#     # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+#     tolerations: []
+
+#   account:
+#     replicas: 1
+#     image:
+#       repository: rocketchat/account-service
+#       pullPolicy: IfNotPresent
+#     securityContext: {}
+#     resources: {}
+#     # Tolerations for pod assignment
+#     # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+#     tolerations: []
+
+#   authorization:
+#     replicas: 1
+#     image:
+#       repository: rocketchat/authorization-service
+#       pullPolicy: IfNotPresent
+#     securityContext: {}
+#     resources: {}
+#     # Tolerations for pod assignment
+#     # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+#     tolerations: []
+
+#   streamHub:
+#     replicas: 1
+#     image:
+#       repository: rocketchat/stream-hub-service
+#       pullPolicy: IfNotPresent
+#     securityContext: {}
+#     resources: {}
+#     # Tolerations for pod assignment
+#     # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+#     tolerations: []
+
+#   nats:
+#     replicas: 1
+
+#   ## Parameters for each Kubernetes service
+#   # NOTE: reserved for future usage still
+#   presenceService:
+#   ddpStreamerService:
+#   natsService:
+#   streamHubService:
+#   accountService:
+#   authorizationService:
+
+# nats:
+#   nats:
+#     image: nats:2.4-alpine
+
+# federation:
+#   # host:
+#   image:
+#     repository: matrixdotorg
+#     registry: docker.io
+#     tag: latest
+#   enabled: false
+#   persistence:
+#     enabled: false
+#     accessModes:
+#       - ReadWriteOnce
+#     resources:
+#       requests:
+#         storage: 10Gi
+
+# postgresql:
+#   enabled: false
+#   auth:
+#     username: rocketchat
+#     password: rocketchat
+#     database: rocketchat
+#   primary:
+#     extraEnvVars:
+#       - name: POSTGRES_INITDB_ARGS
+#         value: "--lc-collate=C --lc-ctype=C"
+
+# # Tolerations for pod assignment
+# # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+# tolerations: []
+
+# hooks:
+#   preUpgrade:
+#     podAnnotations: {}
+#     podLabels: {}
