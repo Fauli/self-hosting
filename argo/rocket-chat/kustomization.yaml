@@ -4,11 +4,11 @@ kind: Kustomization
 resources:
   - namespace.yaml
 
-namespace: rocket-chat
+namespace: rocketchat
 
 helmCharts:
-- name: nextcloud
+- name: rocketchat
   version: "6.17.1"
   repo: https://rocketchat.github.io/helm-charts
-  releaseName: nextcloud
+  releaseName: rocketchat
   valuesFile: values.yaml

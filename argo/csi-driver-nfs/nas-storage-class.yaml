@@ -1,7 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-csi-retain
+  name: synology-nfs-csi-retain
 provisioner: nfs.csi.k8s.io
 parameters:
   server: 192.168.10.17
@@ -10,12 +10,12 @@ reclaimPolicy: Retain
 volumeBindingMode: Immediate
 mountOptions:
   - hard
-  - nfsvers=4.1
+  - nfsvers=4.0
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-csi-delete
+  name: synology-nfs-csi-delete
 provisioner: nfs.csi.k8s.io
 parameters:
   server: 192.168.10.17
@@ -24,4 +24,4 @@ reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
   - hard
-  - nfsvers=4.1
+  - nfsvers=4.0

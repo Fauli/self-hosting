@@ -161,7 +161,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "nfs-csi-retain"
+  storageClass: "synology-nfs-csi-retain"
   accessMode: ReadWriteOnce
   size: 32Gi
 
