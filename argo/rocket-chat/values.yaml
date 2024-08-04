@@ -104,50 +104,6 @@ existingMongodbSecret: ""
 externalMongodbUrl: # mongodb://user:password@localhost:27017/rocketchat
 externalMongodbOplogUrl: # mongodb://user:password@localhost:27017/local?replicaSet=rs0&authSource=admin
 
-##
-## MongoDB chart configuration
-### ref https://github.com/helm/charts/tree/master/stable/mongodb#configuration
-##
-mongodb:
-  ## Enable or disable MongoDB dependency completely.
-  enabled: false
-
-  initdbScriptsConfigMap: rocketchat-mongodb-fix-clustermonitor-role-configmap
-
-  auth:
-    # rootPassword:
-    usernames:
-      - rocketchat
-    # passwords:
-    databases:
-      - rocketchat
-
-  architecture: replicaset
-  replicaCount: 1
-  arbiter:
-    enabled: false
-    pdb:
-      minAvailable: 0
-  pdb:
-    minAvailable: 0
-
-    # key:
-
-  persistence:
-    enabled: false  ## TODO: FRANZ check it!
-    ## mongodb data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "nfs-csi-retain"
-    accessMode: ReadWriteOnce
-    size: 8Gi
-
-  volumePermissions: { enabled: true }
-
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
