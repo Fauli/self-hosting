@@ -1,0 +1,123 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: babybuddy
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/babybuddy
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: csi-driver-nfs
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/csi-driver-nfs
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/nginx
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: jellyfin
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/jellyfin
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: kanboard
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/kanboard
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: metallb
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/metallb
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: metrics-server
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/metrics-server
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: nextcloud
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/nextcloud
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: postgres
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/postgres-operator
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: postgres-ui
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/postgres-operator-ui
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argo-cd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/prometheus
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
