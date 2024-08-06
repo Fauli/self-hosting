@@ -1,17 +1,17 @@
 ingress:
-  # -- Enable and configure ingress settings for the chart under this key.
-  # @default -- See values.yaml
   main:
-    enabled: false
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
     hosts:
-      - host: sonarr.fauli
+      - host: "sonarr.fauli"
         paths:
-          - /
+          - path: /
+            pathType: Prefix
+
 env:
   # -- Set the container timezone
   TZ: UTC
-
-
 
 
 # #

@@ -12,16 +12,16 @@ helmCharts:
   repo: https://k8s-at-home.com/charts/
   releaseName: qbittorrent
   valuesFile: qbittorrent-values.yaml
-- name: sonarr
-  version: "16.3.2"
-  repo: https://k8s-at-home.com/charts/
-  releaseName: sonarr
-  valuesFile: sonarr-values.yaml
 - name: jackett
   version: "11.7.2"
   repo: https://k8s-at-home.com/charts/
   releaseName: jackett
   valuesFile: jackett-values.yaml
+- name: sonarr
+  version: "16.3.2"
+  repo: https://k8s-at-home.com/charts/
+  releaseName: sonarr
+  valuesFile: sonarr-values.yaml
 - name: radarr
   version: "16.3.2"
   repo: https://k8s-at-home.com/charts/
