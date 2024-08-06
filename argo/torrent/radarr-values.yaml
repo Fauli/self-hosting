@@ -1,3 +1,17 @@
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: false
+    hosts:
+      - host: radarr.fauli
+        paths:
+          - /
+
+env:
+  # -- Set the container timezone
+  TZ: UTC
+
 # #
 # # IMPORTANT NOTE
 # #
