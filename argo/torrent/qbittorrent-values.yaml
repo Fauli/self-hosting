@@ -13,6 +13,34 @@ env:
   # -- Set the container timezone
   TZ: UTC
 
+
+settings:
+  # -- Enables automatic port configuration at startup
+  # This sets the qbittorrent port to the value of `service.bittorrent.ports.bittorrent.port`.
+  automaticPortSetup: true
+
+persistence:
+  # -- Default persistence for configuration files.
+  # @default -- See below
+  config:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Sets the persistence type
+    # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+    type: pvc
+    mountPath: /downloads
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: synology-nfs-csi-retain
+    size: 100Gi
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
 ## Original default values:
 #
 # IMPORTANT NOTE
