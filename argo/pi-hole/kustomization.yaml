@@ -7,8 +7,8 @@ resources:
 namespace: pi-hole
 
 helmCharts:
-- name: csi-driver-nfs
-  version: "v4.8.0"
+- name: pihole
+  version: "2.26.1"
   repo: https://mojo2600.github.io/pihole-kubernetes
-  releaseName: csi-driver-nfs
+  releaseName: pihole
   valuesFile: values.yaml
