@@ -2,14 +2,31 @@
 
 # Table of Contents
 
+- [Self Hosting](#self-hosting)
+- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Hardware](#hardware)
 - [Network Setup](#network-setup)
   - [Logical network diagram](#logical-network-diagram)
   - [Firewall rules](#firewall-rules)
+  - [Steps to setup the configuration](#steps-to-setup-the-configuration)
 - [Kubernetes](#kubernetes)
   - [Kubernetes Node Setup](#kubernetes-node-setup)
   - [Kubernetes Components](#kubernetes-components)
+- [Additional Thoughts](#additional-thoughts)
+  - [Make wireguard great again](#make-wireguard-great-again)
+  - [Cluster Setup](#cluster-setup)
+    - [Control Plane](#control-plane)
+    - [Worker Nodes](#worker-nodes)
+  - [ArgoCD](#argocd)
+    - [Configure Argo to snyc apps](#configure-argo-to-snyc-apps)
+  - [DNS](#dns)
+  - [Torrent](#torrent)
+  - [Image registry on the NAS](#image-registry-on-the-nas)
+  - [Use cilium to protect network further](#use-cilium-to-protect-network-further)
+  - [Gateway API](#gateway-api)
+  - [Cloudflare](#cloudflare)
+  - [PXE Boot](#pxe-boot)
 
 # Introduction
 
