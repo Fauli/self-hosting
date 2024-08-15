@@ -66,7 +66,7 @@ serviceDns:
 # -- Configuration for the DHCP service on port 67
 serviceDhcp:
   # -- Generate a Service resource for DHCP traffic
-  enabled: true
+  enabled: false
 
   # -- `spec.type` for the DHCP Service
   type: NodePort
@@ -137,7 +137,7 @@ serviceWeb:
   extraLabels:
     {}
 
-virtualHost: pi.hole
+virtualHost: pi-hole.fauli
 
 # -- Configuration for the Ingress
 ingress:
@@ -281,9 +281,9 @@ extraEnvVarsSecret: {}
   #   key: secret-key
 
 # -- default upstream DNS 1 server to use
-DNS1: "8.8.8.8"
+DNS1: "9.9.9.9"
 # -- default upstream DNS 2 server to use
-DNS2: "8.8.4.4"
+DNS2: "1.1.1.1"
 
 antiaff:
   # -- set to true to enable antiaffinity (example: 2 pihole DNS in the same cluster)

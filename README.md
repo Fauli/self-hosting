@@ -277,6 +277,24 @@ argocd app create pi-hole --repo https://github.com/Fauli/self-hosting.git --pat
 
 ## DNS
 
+In order to make the hosts available via internal DNS, the following configuration on the router is applied:
+
+```
+/ip dns static
+add address=10.13.37.137 comment=fauli-cluster name=cloud.fauli
+add address=10.13.37.137 comment=fauli-cluster name=kanboard.fauli
+add address=10.13.37.137 comment=fauli-cluster name=postgres.fauli
+add address=10.13.37.137 comment=fauli-cluster name=baby.fauli
+add address=10.13.37.137 comment=fauli-cluster name=metrics.fauli
+add address=10.13.37.137 comment=fauli-cluster name=jellyfin.fauli
+add address=10.13.37.137 comment=fauli-cluster name=prometheus.fauli
+add address=10.13.37.137 comment=fauli-cluster name=jackett.fauli
+add address=10.13.37.137 comment=fauli-cluster name=radarr.fauli
+add address=10.13.37.137 comment=fauli-cluster name=sonarr.fauli
+add address=10.13.37.137 comment=fauli-cluster name=qbittorrent.fauli
+add address=10.13.37.137 comment=fauli-cluster name=pi-hole.fauli
+add address=10.13.37.137 comment=fauli-cluster name=alertmanager.fauli
+```
 
 ## Torrent
 
@@ -296,7 +314,50 @@ Maybe worth from the start?
 
 ## Cloudflare
 
-Or some other service?
+The cloudflare IPs can be found here:
+https://www.cloudflare.com/ips-v4/#
+
+Add them to the firewall to access the svc service.
+
+In cloudflare, register for ZeroTrust and add Google as Identity provider.
+
+On the router run the follwing:
+```
+/ip firewall address-list
+add list=cloudflare address=173.245.48.0/20
+add list=cloudflare address=103.21.244.0/22
+add list=cloudflare address=103.22.200.0/22
+add list=cloudflare address=103.31.4.0/22
+add list=cloudflare address=141.101.64.0/18
+add list=cloudflare address=108.162.192.0/18
+add list=cloudflare address=190.93.240.0/20
+add list=cloudflare address=188.114.96.0/20
+add list=cloudflare address=197.234.240.0/22
+add list=cloudflare address=198.41.128.0/17
+add list=cloudflare address=162.158.0.0/15
+add list=cloudflare address=104.16.0.0/13
+add list=cloudflare address=104.24.0.0/14
+add list=cloudflare address=172.64.0.0/13
+add list=cloudflare address=131.0.72.0/22
+
+# NAT rule to forward ports 80 and 443 to the internal IP 10.13.37.137
+/ip firewall nat
+add chain=dstnat dst-address=<your_public_IP> protocol=tcp dst-port=80 action=dst-nat to-addresses=10.13.37.137 to-ports=80 comment="Port forwarding for HTTP and HTTPS to 10.13.37.137"
+
+add chain=dstnat dst-address=<your_public_IP> protocol=tcp dst-port=443 action=dst-nat to-addresses=10.13.37.137 to-ports=443 comment="Port forwarding for HTTP and HTTPS to 10.13.37.137"
+
+
+# Firewall rule to allow traffic on ports 80 and 443 to 10.13.37.137 only from allowed IP ranges
+/ip firewall filter
+add chain=forward protocol=tcp dst-address=10.13.37.137 dst-port=80 src-address-list=cloudflare action=accept comment="Allow HTTP/HTTPS traffic to 10.13.37.137 from allowed IPs"
+
+add chain=forward protocol=tcp dst-address=10.13.37.137 dst-port=443 src-address-list=cloudflare action=accept comment="Allow HTTP/HTTPS traffic to 10.13.37.137 from allowed IPs"
+
+# Firewall rule to block all other traffic on ports 80 and 443 to 10.13.37.137
+add chain=forward protocol=tcp dst-address=10.13.37.137 dst-port=80,443 action=drop comment="Block all other HTTP/HTTPS traffic to 10.13.37.137"
+
+```
+
 
 ## PXE Boot
 

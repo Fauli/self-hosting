@@ -27,6 +27,10 @@ ingress:
       paths:
          - path: /
            pathType: Prefix
+    - host: "baby.gute-idee.me"
+      paths:
+         - path: /
+           pathType: Prefix
 
 persistence:
   # -- Default persistence for configuration files.
