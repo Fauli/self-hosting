@@ -250,7 +250,11 @@ You can than add needed apps that will be managed by argo.
 All charts can be found under the `argo` folder in the repository.
 
 ```bash
-# essentials
+# You can just:
+k apply -f argo/pplications.yaml
+
+# Alternatively:
+## essentials
 argocd app create metallb --repo https://github.com/Fauli/self-hosting.git --path argo/metallb  --dest-server https://kubernetes.default.svc
 argocd app create ingress-nginx --repo https://github.com/Fauli/self-hosting.git --path argo/nginx  --dest-server https://kubernetes.default.svc
 argocd app create metrics-server --repo https://github.com/Fauli/self-hosting.git --path argo/metrics-server  --dest-server https://kubernetes.default.svc
@@ -258,16 +262,22 @@ argocd app create prometheus --repo https://github.com/Fauli/self-hosting.git --
 argocd app create csi-driver-nfs --repo https://github.com/Fauli/self-hosting.git --path argo/csi-driver-nfs  --dest-server https://kubernetes.default.svc
 
 
-# database
+## database
 argocd app create postgres --repo https://github.com/Fauli/self-hosting.git --path argo/postgres-operator  --dest-server https://kubernetes.default.svc
 argocd app create postgres-ui --repo https://github.com/Fauli/self-hosting.git --path argo/postgres-operator-ui  --dest-server https://kubernetes.default.svc
 
-# tools
+## tools
 argocd app create kanboard --repo https://github.com/Fauli/self-hosting.git --path argo/kanboard  --dest-server https://kubernetes.default.svc
 argocd app create babybuddy --repo https://github.com/Fauli/self-hosting.git --path argo/babybuddy  --dest-server https://kubernetes.default.svc
 argocd app create nextcloud --repo https://github.com/Fauli/self-hosting.git --path argo/nextcloud  --dest-server https://kubernetes.default.svc
 argocd app create jellyfin --repo https://github.com/Fauli/self-hosting.git --path argo/jellyfin  --dest-server https://kubernetes.default.svc
+argocd app create pi-hole --repo https://github.com/Fauli/self-hosting.git --path argo/pi-hole  --dest-server https://kubernetes.default.svc
+
 ```
+
+## DNS
+
+
 ## Torrent
 
 jackett, sonarr, radarr, ...
