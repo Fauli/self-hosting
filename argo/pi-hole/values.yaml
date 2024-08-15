@@ -142,10 +142,10 @@ virtualHost: pi.hole
 # -- Configuration for the Ingress
 ingress:
   # -- Generate a Ingress resource
-  enabled: false
+  enabled: true
 
   # -- Specify an ingressClassName
-  # ingressClassName: nginx
+  ingressClassName: nginx
 
   # -- Annotations for the ingress
   annotations: {}
@@ -154,7 +154,7 @@ ingress:
   path: /
   hosts:
     # virtualHost (default value is pi.hole) will be appended to the hosts
-    - chart-example.local
+    - pi-hole.fauli
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -209,7 +209,7 @@ resources: {}
 # -- `spec.PersitentVolumeClaim` configuration
 persistentVolumeClaim:
   # -- set to true to use pvc
-  enabled: false
+  enabled: true
 
   # -- specify an existing `PersistentVolumeClaim` to use
   # existingClaim: ""
@@ -229,7 +229,7 @@ persistentVolumeClaim:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: synology-nfs-csi-retain
 
   ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
   ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
@@ -255,7 +255,7 @@ topologySpreadConstraints: []
 affinity: {}
 
 # -- Administrator password when not using an existing secret (see below)
-adminPassword: "admin"
+adminPassword: "fauli-hole"
 
 # -- Use an existing secret for the admin password.
 admin:
@@ -535,7 +535,8 @@ podDnsConfig:
   policy: "None"
   nameservers:
     - 127.0.0.1
-    - 8.8.8.8
+    - 9.9.9.9
+    - 1.1.1.1
 
 # -- configure a Pod Disruption Budget
 podDisruptionBudget:
