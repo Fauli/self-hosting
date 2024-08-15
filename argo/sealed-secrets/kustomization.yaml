@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - crds/sealed-secrets.yaml
 
 namespace: sealed-secrets
 
