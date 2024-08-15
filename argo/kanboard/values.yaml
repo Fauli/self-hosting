@@ -1,5 +1,5 @@
 env:
-  TZ: "Switzerland/Zurich"
+  TZ: "Europe/Zurich"
 
 ingress:
   enabled: true

@@ -13,8 +13,8 @@
 
 # See more environment variables in the babybuddy documentation
 # https://github.com/linuxserver/docker-babybuddy#parameters
-# env:
-#   TZ: "Switzerland/Zurich"
+env:
+  TZ: "Europe/Zurich"
 
 # service:
 #   port:

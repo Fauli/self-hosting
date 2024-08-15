@@ -18,7 +18,7 @@ image:
 # @default -- See below
 env:
   # -- Set the container timezone
-  TZ: UTC
+  TZ: "Europe/Zurich"
 
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
