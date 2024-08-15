@@ -273,6 +273,7 @@ k apply -f argo/pplications.yaml
 # Alternatively:
 ## essentials
 argocd app create metallb --repo https://github.com/Fauli/self-hosting.git --path argo/metallb  --dest-server https://kubernetes.default.svc
+argocd app create sealed-secrets --repo https://github.com/Fauli/self-hosting.git --path argo/sealed-secrets  --dest-server https://kubernetes.default.svc
 argocd app create ingress-nginx --repo https://github.com/Fauli/self-hosting.git --path argo/nginx  --dest-server https://kubernetes.default.svc
 argocd app create metrics-server --repo https://github.com/Fauli/self-hosting.git --path argo/metrics-server  --dest-server https://kubernetes.default.svc
 argocd app create prometheus --repo https://github.com/Fauli/self-hosting.git --path argo/prometheus  --dest-server https://kubernetes.default.svc

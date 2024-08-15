@@ -10,6 +10,10 @@ ingress:
       paths:
          - path: /
            pathType: Prefix
+    - host: "kanboard.gute-idee.me"
+      paths:
+         - path: /
+           pathType: Prefix
 
 
 # Default values for kanboard
