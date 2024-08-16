@@ -328,8 +328,12 @@ With kubeseal installed, you can than encrypt the secrets:
 
 ```bash
 # Example for ingress certificates
+kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name sealed-secrets > seal-public.pem
+
+
 kubectl create secret tls origin-cert --key hostname-private.key --cert hostnames-puplic.crt --dry-run=client -o yaml > origin-cert.yaml
-kubeseal --format=yaml --controller-namespace sealed-secrets --controller-name sealed-secrets  < origin-cert.yaml > secret-origin-cert.yaml
+kubeseal --format yaml --cert seal-public.pem < origin-cert.yaml > secret-origin-cert.yaml
+
 
 # or the nextcloud secret:
 kubeseal --format=yaml --controller-namespace sealed-secrets --controller-name sealed-secrets  < secret-franz.yaml > secret-nextcloud.yaml
