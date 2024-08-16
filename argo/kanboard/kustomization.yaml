@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - ../origin-cert/secret-origin-cert.yaml
+  - ../origin-cert
 
 namespace: kanboard
 
