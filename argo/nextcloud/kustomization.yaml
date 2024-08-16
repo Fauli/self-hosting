@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - secret-origin-cert.yaml
+  - cloud-secret-origin-cert.yaml
   - secret-nextcloud.yaml
 
 namespace: nextcloud

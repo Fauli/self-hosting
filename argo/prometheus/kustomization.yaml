@@ -13,7 +13,7 @@ resources:
   - crds/crd-scrapeconfigs.yaml
   - crds/crd-servicemonitors.yaml
   - crds/crd-thanosrulers.yaml
-  - secret-origin-cert.yaml
+  - prometheus-secret-origin-cert.yaml
 
 namespace: prometheus
 
