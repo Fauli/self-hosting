@@ -42,6 +42,11 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
+    tls:
+     - secretName: origin-cert
+       hosts:
+         - jellyfin.gute-idee.me
+
 
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml

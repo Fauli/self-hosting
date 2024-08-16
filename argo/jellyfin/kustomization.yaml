@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - jellyfin-secret-origin-cert.yaml
 
 namespace: jellyfin
 
