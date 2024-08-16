@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - ../origin-cert
+  - secret-origin-cert.yaml
 
 namespace: babybuddy
 
