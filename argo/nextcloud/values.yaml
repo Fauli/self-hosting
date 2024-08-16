@@ -412,7 +412,7 @@ mariadb:
   ##
   primary:
     persistence:
-      enabled: true
+      enabled: false
       # Use an existing Persistent Volume Claim (must be created ahead of time)
       existingClaim: ""
       storageClass: "synology-nfs-csi-retain"
@@ -511,7 +511,7 @@ service:
 ##
 persistence:
   # Nextcloud Data (/var/www/html)
-  enabled: true
+  enabled: false
   annotations: {}
   ## nextcloud data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
