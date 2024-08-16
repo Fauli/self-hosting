@@ -22,6 +22,7 @@
     - [Configure Argo to snyc apps](#configure-argo-to-snyc-apps)
   - [DNS](#dns)
   - [Torrent](#torrent)
+  - [Kubeseal](#kubeseal)
   - [Image registry on the NAS](#image-registry-on-the-nas)
   - [Use cilium to protect network further](#use-cilium-to-protect-network-further)
   - [Gateway API](#gateway-api)
@@ -317,6 +318,25 @@ add address=10.13.37.137 comment=fauli-cluster name=alertmanager.fauli
 ## Torrent
 
 jackett, sonarr, radarr, ...
+
+## Kubeseal
+
+Can be used so safely store passwords and keys in GIT.
+This repo makes use of sealed-secrets. In order to make it work, you need to create some secrets that are used in the different helm charts values.yaml configurations.
+
+With kubeseal installed, you can than encrypt the secrets:
+
+```bash
+# Example for ingress certificates
+kubectl create secret tls origin-cert --key hostname-private.key --cert hostnames-puplic.crt --dry-run=client -o yaml > origin-cert.yaml
+kubeseal --format=yaml --controller-namespace sealed-secrets --controller-name sealed-secrets  < origin-cert.yaml > secret-origin-cert.yaml
+
+# or the nextcloud secret:
+kubeseal --format=yaml --controller-namespace sealed-secrets --controller-name sealed-secrets  < secret-franz.yaml > secret-nextcloud.yaml
+
+```
+
+
 
 ## Image registry on the NAS
 

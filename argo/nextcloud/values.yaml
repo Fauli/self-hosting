@@ -26,6 +26,10 @@ ingress:
   enabled: true
   className: nginx
   annotations: {}
+  tls:
+    - secretName: origin-cert
+      hosts:
+        - cloud.gute-idee.me
   #  nginx.ingress.kubernetes.io/proxy-body-size: 4G
   #  kubernetes.io/tls-acme: "true"
   #  cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -54,13 +58,9 @@ ingress:
   #    location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
   #      deny all;
   #    }
-  # tls:
-  #   - secretName: nextcloud-tls
-  #     hosts:
-  #       - nextcloud.kube.home
   labels: {}
   path: /
-  host: cloud.fauli
+  host: cloud.gute-idee.me
   pathType: Prefix
 
 
@@ -75,13 +75,13 @@ phpClientHttpsFix:
   protocol: https
 
 nextcloud:
-  host: cloud.fauli
-  username: admin
-  password: changeme
+  host: cloud.gute-idee.me
+  #username: admin
+  #password: changeme
   ## Use an existing secret
   existingSecret:
-    enabled: false
-    # secretName: nameofsecret
+    enabled: true
+    secretName: nextcloud-fauli
     usernameKey: nextcloud-username
     passwordKey: nextcloud-password
     tokenKey: ""
@@ -395,7 +395,7 @@ mariadb:
   # see: https://github.com/bitnami/charts/tree/main/bitnami/mariadb#global-parameters
   global:
     # overwrites the primary.persistence.storageClass value
-    defaultStorageClass: ""
+    defaultStorageClass: "synology-nfs-csi-retain"
 
   auth:
     database: nextcloud
@@ -412,10 +412,10 @@ mariadb:
   ##
   primary:
     persistence:
-      enabled: false
+      enabled: true
       # Use an existing Persistent Volume Claim (must be created ahead of time)
       existingClaim: ""
-      storageClass: ""
+      storageClass: "synology-nfs-csi-retain"
       accessMode: ReadWriteOnce
       size: 8Gi
 
@@ -465,7 +465,7 @@ redis:
     existingSecretPasswordKey: ""
   # Since Redis is used for caching only, you might want to use a storageClass with different reclaim policy and backup settings
   global:
-    storageClass: ""
+    storageClass: "synology-nfs-csi-delete"
   master:
     persistence:
       enabled: true
@@ -511,7 +511,7 @@ service:
 ##
 persistence:
   # Nextcloud Data (/var/www/html)
-  enabled: false
+  enabled: true
   annotations: {}
   ## nextcloud data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
@@ -520,7 +520,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClass: "-"
+  storageClass: "synology-nfs-csi-retain"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
@@ -528,7 +528,7 @@ persistence:
   # existingClaim:
 
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 100Gi
 
   ## Use an additional pvc for the data directory rather than a subpath of the default PVC
   ## Useful to store data on a different storageClass (e.g. on slower disks)

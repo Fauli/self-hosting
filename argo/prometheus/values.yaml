@@ -1007,6 +1007,7 @@ grafana:
     #   - grafana.domain.com
     hosts: 
       - metrics.fauli
+      - metrics.gute-idee.me
 
     ## Path for grafana ingress
     path: /
@@ -1015,9 +1016,9 @@ grafana:
     ## Secret must be manually created in the namespace
     ##
     tls: []
-    # - secretName: grafana-general-tls
-    #   hosts:
-    #   - grafana.example.com
+    - secretName: origin-cert
+      hosts:
+      - metrics.gute-idee.me
 
   # # To make Grafana persistent (Using Statefulset)
   # #
