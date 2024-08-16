@@ -1015,7 +1015,7 @@ grafana:
     ## TLS configuration for grafana Ingress
     ## Secret must be manually created in the namespace
     ##
-    tls: []
+    tls:
     - secretName: origin-cert
       hosts:
       - metrics.gute-idee.me

@@ -324,6 +324,9 @@ jackett, sonarr, radarr, ...
 Can be used so safely store passwords and keys in GIT.
 This repo makes use of sealed-secrets. In order to make it work, you need to create some secrets that are used in the different helm charts values.yaml configurations.
 
+```bash
+brew install kubeseal
+```
 With kubeseal installed, you can than encrypt the secrets:
 
 ```bash
@@ -333,7 +336,10 @@ kubeseal --fetch-cert --controller-namespace sealed-secrets --controller-name se
 
 kubectl create secret tls origin-cert --key hostname-private.key --cert hostnames-puplic.crt --dry-run=client -o yaml > origin-cert.yaml
 kubeseal --format yaml --cert seal-public.pem < origin-cert.yaml > secret-origin-cert.yaml
-
+kubeseal --namespace nextcloud --format yaml --cert seal-public.pem < origin-cert.yaml > cloud-secret-origin-cert.yaml
+kubeseal --namespace kanboard --format yaml --cert seal-public.pem < origin-cert.yaml > kanboard-secret-origin-cert.yaml
+kubeseal --namespace babybuddy --format yaml --cert seal-public.pem < origin-cert.yaml > babybuddy-secret-origin-cert.yaml
+kubeseal --namespace prometheus --format yaml --cert seal-public.pem < origin-cert.yaml > prometheus-secret-origin-cert.yaml\n
 
 # or the nextcloud secret:
 kubeseal --format=yaml --controller-namespace sealed-secrets --controller-name sealed-secrets  < secret-franz.yaml > secret-nextcloud.yaml
