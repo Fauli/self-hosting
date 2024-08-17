@@ -5,22 +5,21 @@
 
 loki:
   enabled: true
-  isDefault: true
-  url: http://loki-svc:3333
-  readinessProbe:
-    httpGet:
-      path: /ready
-      port: http-metrics
-    initialDelaySeconds: 45
-  livenessProbe:
-    httpGet:
-      path: /ready
-      port: http-metrics
-    initialDelaySeconds: 45
-  datasource:
-    jsonData: "{}"
-    uid: ""
-
+  # isDefault: true
+  # url: http://{{(include "loki.serviceName" .)}}:{{ .Values.loki.service.port }}
+  # readinessProbe:
+  #   httpGet:
+  #     path: /ready
+  #     port: http-metrics
+  #   initialDelaySeconds: 45
+  # livenessProbe:
+  #   httpGet:
+  #     path: /ready
+  #     port: http-metrics
+  #   initialDelaySeconds: 45
+  # datasource:
+  #   jsonData: "{}"
+  #   uid: ""
 
  promtail:
   enabled: true
