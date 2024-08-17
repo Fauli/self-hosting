@@ -32,16 +32,16 @@ promtail:
 # fluent-bit:
 #   enabled: false
 
-# grafana:
-#   enabled: false
-#   sidecar:
-#     datasources:
-#       label: ""
-#       labelValue: ""
-#       enabled: true
-#       maxLines: 1000
-#   image:
-#     tag: 10.3.3
+grafana:
+  enabled: false
+  sidecar:
+    datasources:
+      label: ""
+      labelValue: ""
+      enabled: true
+      maxLines: 1000
+  image:
+    tag: 10.3.3
 
 # prometheus:
 #   enabled: false
