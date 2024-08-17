@@ -12,8 +12,8 @@ helmCharts:
   repo: https://grafana.github.io/helm-charts
   releaseName: loki
   valuesFile: loki-values.yaml
-# - name: promtail
-#   version: "6.16.4"
-#   repo: https://grafana.github.io/helm-charts
-#   releaseName: promtail
-#   valuesFile: promtail-values.yaml
+- name: promtail
+  version: "6.16.4"
+  repo: https://grafana.github.io/helm-charts
+  releaseName: promtail
+  valuesFile: promtail-values.yaml
