@@ -22,6 +22,10 @@ backend:
 write:
   replicas: 0
 
+# Configuration for the memberlist service
+memberlist:
+  service:
+    publishNotReadyAddresses: true
 
 singleBinary:
   persistence:
