@@ -15,5 +15,6 @@ spec:
       containers:
       - name: cells-app-container
         image: fauli/cells:0.0.7
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
