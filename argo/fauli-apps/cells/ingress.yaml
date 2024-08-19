@@ -17,4 +17,4 @@ spec:
   tls:
   - hosts:
     - cells.gute-idee.me
-    secretName: cells-secret-origin-cert  # Secret for storing SSL certificate
+    secretName: origin-cert  # Secret for storing SSL certificate
