@@ -17,5 +17,3 @@ spec:
         image: fauli/cells:0.0.3
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: regcred  # Optional, if your image is in a private registry
