@@ -13,9 +13,7 @@ ingress:
   path: /
   hosts:
     - registry.fauli
-    - registry.gute-idee.me 
   tls:
     - secretName: docker-registry-tls
       hosts:
         - registry.fauli
-        - registry.gute-idee.me 
