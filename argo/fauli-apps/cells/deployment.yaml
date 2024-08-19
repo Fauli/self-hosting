@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: cells-app-container
-        image: fauli/cells:0.0.3
+        image: fauli/cells:0.0.4
         ports:
         - containerPort: 80
