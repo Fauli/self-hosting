@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cells-app-container
-        image: <your-docker-image>
+        image: fauli/cells:latest
         ports:
         - containerPort: 80
       imagePullSecrets:
