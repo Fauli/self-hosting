@@ -121,14 +121,25 @@ spec:
     path: argo/prometheus
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+# kind: Application
+# metadata:
+#   name: docker-registry
+#   namespace: argo-cd
+# spec:
+#   destination:
+#     server: https://kubernetes.default.svc
+#   source:
+#     path: argo/registry
+#     repoURL: https://github.com/Fauli/self-hosting.git
+# ---
 kind: Application
 metadata:
-  name: docker-registry
+  name: fauli-apps
   namespace: argo-cd
 spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    path: argo/registry
+    path: argo/fauli-apps
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
