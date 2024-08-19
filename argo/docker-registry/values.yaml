@@ -6,7 +6,7 @@ persistence:
   deleteEnabled: true
   existingClaim: docker-registry-pvc # <- here we specify the pvc we created earlier
 secrets:
-  htpasswd: myuser:$2y$05$mDso3c3.tzcPUAE5NQsqmuYX0JoP8ihttoNBa59VaFPn8Dz6RQbkS # <- This is the username / password we created in the security section. You can replace this with your own username and password
+  htpasswd: fauli:$2y$05$eTc7IHYHFz/SFIJqfshTsOpO/ddtjBjfHZpTp9kTY3BCrWPC26ohW  # <- This is the username / password we created in the security section. You can replace this with your own username and password
 ingress:
   enabled: true
   className: nginx
