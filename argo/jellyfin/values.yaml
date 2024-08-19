@@ -51,8 +51,23 @@ ingress:
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
 persistence:
-  config:
-    enabled: false
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Sets the persistence type
+    # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+    type: pvc
+    mountPath: /config
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: synology-nfs-csi-retain
+    size: 10Gi
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
 
   # Cache does NOT contain temporary transcoding data.
   cache:
@@ -60,8 +75,65 @@ persistence:
     mountPath: /cache
 
   media:
-    enabled: false
+    enabled: true
+
+    # -- Sets the persistence type
+    # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+    type: pvc
     mountPath: /media
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: synology-nfs-csi-retain
+    size: 500Gi  # TODO: adapt this value with the size you want to use
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+# persistence:
+#   # -- Default persistence for configuration files.
+#   # @default -- See below
+#   config:
+#     # -- Enables or disables the persistence item
+#     enabled: false
+
+#     # -- Sets the persistence type
+#     # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+#     type: pvc
+
+#     # -- Where to mount the volume in the main container.
+#     # Defaults to `/<name_of_the_volume>`,
+#     # setting to '-' creates the volume but disables the volumeMount.
+#     mountPath:  # /config
+#     # -- Specify if the volume should be mounted read-only.
+#     readOnly: false
+#     # -- Override the name suffix that is used for this volume.
+#     nameOverride:
+
+#     # -- Storage Class for the config volume.
+#     # If set to `-`, dynamic provisioning is disabled.
+#     # If set to something else, the given storageClass is used.
+#     # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+#     storageClass:  # "-"
+
+#     # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+#     existingClaim:  # your-claim
+
+#     # -- Used in conjunction with `existingClaim`. Specifies a sub-path inside the referenced volume instead of its root
+#     subPath:  # some-subpath
+
+#     # -- AccessMode for the persistent volume.
+#     # Make sure to select an access mode that is supported by your storage provider!
+#     # [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+#     accessMode: ReadWriteOnce
+
+#     # -- The amount of storage that is requested for the persistent volume.
+#     size: 1Gi
+
+#     # -- Set to true to retain the PVC upon `helm uninstall`
+#     retain: false
 
 # -- Configure the Security Context for the Pod
 podSecurityContext: {}
