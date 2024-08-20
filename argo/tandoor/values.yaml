@@ -92,9 +92,14 @@ persistence:
 # @default -- See [values.yaml](./values.yaml)
 postgresql:
   enabled: true
-  global:
-    env:
-      BITNAMI_DEBUG: true
+  image:
+    debug: true
+   extraEnvVars:
+    - name: BITNAMI_DEBUG
+      value: true
+  containerSecurityContext:
+    runAsUser: 1024
+    runAsNonRoot: true
   auth:
     database: tandoor
     postgresPassword: iChangedIt.ButWhy...
