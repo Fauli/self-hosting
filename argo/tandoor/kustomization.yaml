@@ -10,6 +10,6 @@ namespace: tandoor
 helmCharts:
 - name: tandoor
   version: "0.9.6"
-  repo: oci://ghcr.io/gabe565/charts/tandoor
+  repo: https://charts.gabe565.com
   releaseName: tandoor
   valuesFile: values.yaml
