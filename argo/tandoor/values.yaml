@@ -94,9 +94,9 @@ postgresql:
   enabled: true
   image:
     debug: true
-   extraEnvVars:
-    - name: BITNAMI_DEBUG
-      value: true
+    extraEnvVars:
+      - name: BITNAMI_DEBUG
+        value: true
   containerSecurityContext:
     runAsUser: 1024
     runAsNonRoot: true
