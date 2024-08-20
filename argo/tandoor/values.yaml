@@ -92,6 +92,9 @@ persistence:
 # @default -- See [values.yaml](./values.yaml)
 postgresql:
   enabled: true
+  global:
+    env:
+      BITNAMI_DEBUG: true
   auth:
     database: tandoor
     postgresPassword: iChangedIt.ButWhy...
@@ -110,4 +113,5 @@ podSecurityContext:
   # -- Run as `nobody` group
   runAsGroup: 65534
   # -- Volume binds will be granted to `nobody` group
-  fsGroup: 65534
+  fsUser: 1024
+  fsGroup: 100
