@@ -25,3 +25,17 @@ volumeBindingMode: Immediate
 mountOptions:
   - hard
   - nfsvers=4.0
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: synology-nfs-csi-postgres
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 192.168.10.17
+  share: /volume2/fauli-cluster-no-mapping
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+mountOptions:
+  - hard
+  - nfsvers=4.0

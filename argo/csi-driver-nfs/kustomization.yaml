@@ -3,6 +3,9 @@ kind: Kustomization
 
 namespace: kube-system
 
+resources:
+  - nas-storage-class.yaml
+
 helmCharts:
 - name: csi-driver-nfs
   version: "v4.8.0"
