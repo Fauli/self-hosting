@@ -99,6 +99,8 @@ postgresql:
     database: tandoor
     postgresPassword: iChangedIt.ButWhy...
   primary:
+    volumePermissions:
+      enabled: true
     persistence:
       enabled: true
       storageClass: "synology-nfs-csi-retain"
