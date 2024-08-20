@@ -108,7 +108,7 @@ postgresql:
       enabled: true
     persistence:
       enabled: true
-      storageClass: "synology-nfs-csi-retain"
+      storageClass: "synology-nfs-csi-postgres"
       size: 32Gi
       mountPath: /bitnami/postgresql
       accessModes:
