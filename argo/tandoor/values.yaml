@@ -36,6 +36,7 @@ ingress:
   # @default -- See [values.yaml](./values.yaml)
   main:
     enabled: true
+    ingressClassName: nginx
     hosts:
       - host: recipes.fauli
         paths:
