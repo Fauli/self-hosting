@@ -8,11 +8,8 @@ resources:
 namespace: tandoor
 
 helmCharts:
-- name: harbor
-  version: "1.15.0"
-  repo: https://helm.goharbor.io
-  releaseName: harbor
+- name: tandoor
+  version: "0.9.6"
+  repo: oci://ghcr.io/gabe565/charts/tandoor
+  releaseName: tandoor
   valuesFile: values.yaml
-
-  ## Read more here: https://ruzickap.github.io/k8s-harbor/part-04/#install-harbor-using-helm
-  ## and here: 
