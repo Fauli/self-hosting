@@ -77,8 +77,8 @@ persistence:
     mountPath: /opt/recipes/mediafiles
     retain: true
     storageClass: "synology-nfs-csi-postgres"
-    # accessMode: ReadWriteOnce
-    # size: 1Gi
+    accessMode: ReadWriteOnce
+    size: 64Gi
   static:
     enabled: true
     type: emptyDir
