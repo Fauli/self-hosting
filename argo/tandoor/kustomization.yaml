@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - recipes-secret-origin-cert.yaml
+
+namespace: tandoor
+
+helmCharts:
+- name: harbor
+  version: "1.15.0"
+  repo: https://helm.goharbor.io
+  releaseName: harbor
+  valuesFile: values.yaml
+
+  ## Read more here: https://ruzickap.github.io/k8s-harbor/part-04/#install-harbor-using-helm
+  ## and here: 

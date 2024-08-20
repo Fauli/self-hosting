@@ -1,0 +1,110 @@
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/bjw-s/helm-charts/blob/a081de5/charts/library/common/values.yaml
+#
+
+image:
+  # -- image repository
+  repository: ghcr.io/tandoorrecipes/recipes
+  # -- image tag
+  tag: 1.5.18
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+  # -- image tag
+
+# -- environment variables. [[ref]](https://github.com/TandoorRecipes/recipes/blob/master/.env.template).
+# @default -- See [values.yaml](./values.yaml)
+env:
+  # -- default timezone
+  TIMEZONE: Europe/Zurich
+  # SECRET_KEY: changeme
+
+service:
+  # -- Configures service settings for the chart.
+  # @default -- See [values.yaml](./values.yaml)
+  main:
+    ports:
+      http:
+        port: 8080
+      static:
+        port: 80
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See [values.yaml](./values.yaml)
+  main:
+    enabled: true
+    hosts:
+      - host: recipes.fauli
+        paths:
+          - path: /
+          - path: /static
+            service:
+              port: 80
+          - path: /media
+            service:
+              port: 80
+      - host: recipes.gute-idee.me
+        paths:
+          - path: /
+          - path: /static
+            service:
+              port: 80
+          - path: /media
+            service:
+              port: 80
+    tls:
+      - secretName: origin-cert
+        hosts:
+          - recipes.gute-idee.me
+
+
+# -- Configure persistence settings for the chart under this key.
+# @default -- See [values.yaml](./values.yaml)
+persistence:
+  config:
+    enabled: false
+    retain: true
+    # storageClass: ""
+    storageClass: "synology-nfs-csi-retain"
+    # accessMode: ReadWriteOnce
+    size: 20Gi
+  media:
+    enabled: false
+    mountPath: /opt/recipes/mediafiles
+    retain: true
+    storageClass: "synology-nfs-csi-retain"
+    # accessMode: ReadWriteOnce
+    # size: 1Gi
+  static:
+    enabled: true
+    type: emptyDir
+    mountPath: /opt/recipes/staticfiles
+  django-js-reverse:
+    enabled: true
+    type: emptyDir
+    mountPath: /opt/recipes/cookbook/static/django_js_reverse
+
+
+# -- Enable and configure postgresql database subchart under this key. [[ref]](https://github.com/bitnami/charts/tree/main/bitnami/mariadb)
+# @default -- See [values.yaml](./values.yaml)
+postgresql:
+  enabled: false
+  auth:
+    database: tandoor
+    postgresPassword: changeme
+  primary:
+    persistence:
+      enabled: false
+      # storageClass: ""
+      # size: 8Gi
+
+podSecurityContext:
+  # -- Run as `nobody` user
+  runAsUser: 65534
+  # -- Run as `nobody` group
+  runAsGroup: 65534
+  # -- Volume binds will be granted to `nobody` group
+  fsGroup: 65534
