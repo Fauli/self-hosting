@@ -66,17 +66,17 @@ ingress:
 # @default -- See [values.yaml](./values.yaml)
 persistence:
   config:
-    enabled: false
+    enabled: true
     retain: true
     # storageClass: ""
-    storageClass: "synology-nfs-csi-retain"
+    storageClass: "synology-nfs-csi-postgres"
     # accessMode: ReadWriteOnce
     size: 20Gi
   media:
-    enabled: false
+    enabled: true
     mountPath: /opt/recipes/mediafiles
     retain: true
-    storageClass: "synology-nfs-csi-retain"
+    storageClass: "synology-nfs-csi-postgres"
     # accessMode: ReadWriteOnce
     # size: 1Gi
   static:
