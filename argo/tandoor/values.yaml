@@ -19,6 +19,7 @@ image:
 env:
   # -- default timezone
   TZ: Europe/Zurich
+  ENABLE_SIGNUP : 1
   # SECRET_KEY: changeme
 
 service:
