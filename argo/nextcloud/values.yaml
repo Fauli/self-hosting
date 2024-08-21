@@ -395,7 +395,7 @@ mariadb:
   # see: https://github.com/bitnami/charts/tree/main/bitnami/mariadb#global-parameters
   global:
     # overwrites the primary.persistence.storageClass value
-    defaultStorageClass: "synology-nfs-csi-retain"
+    defaultStorageClass: "synology-nfs-csi-postgres"
 
   auth:
     database: nextcloud
@@ -415,7 +415,7 @@ mariadb:
       enabled: false
       # Use an existing Persistent Volume Claim (must be created ahead of time)
       existingClaim: ""
-      storageClass: "synology-nfs-csi-retain"
+      storageClass: "synology-nfs-csi-postgres"
       accessMode: ReadWriteOnce
       size: 8Gi
 
@@ -520,7 +520,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "synology-nfs-csi-retain"
+  storageClass: "synology-nfs-csi-postgres"
 
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true

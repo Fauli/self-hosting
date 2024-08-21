@@ -14,7 +14,7 @@ spec:
   numberOfInstances: 1
   volume:
     size: "64Gi"
-    storageClass: "synology-nfs-csi-retain"
+    storageClass: "synology-nfs-csi-postgres"
   users:
     jellyfin: []
     babybuddy: []
@@ -24,7 +24,6 @@ spec:
     jellyfin: jellyfin
     babybuddy: babybuddy
     rocketchat: rocketchat
-    kanboard: kanboard
   allowedSourceRanges:
     # IP ranges to access your cluster go here
   
