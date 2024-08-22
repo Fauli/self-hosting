@@ -29,7 +29,7 @@ persistence:
     # If set to `-`, dynamic provisioning is disabled.
     # If set to something else, the given storageClass is used.
     # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
-    storageClass: synology-nfs-csi-retain
+    storageClass: synology-nfs-csi-postgres
     size: 10Gi
 
     # -- Set to true to retain the PVC upon `helm uninstall`
