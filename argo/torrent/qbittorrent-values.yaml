@@ -35,8 +35,13 @@ persistence:
     # If set to `-`, dynamic provisioning is disabled.
     # If set to something else, the given storageClass is used.
     # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
-    storageClass: synology-nfs-csi-retain
-    size: 100Gi
+    # storageClass: synology-nfs-csi-retain
+    # size: 100Gi
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: torrent-pvc  # your-claim
+    # -- Used in conjunction with `existingClaim`. Specifies a sub-path inside the referenced volume instead of its root
+    subPath: radarr # some-subpath
+    accessMode: ReadWriteOnce
 
     # -- Set to true to retain the PVC upon `helm uninstall`
     retain: true

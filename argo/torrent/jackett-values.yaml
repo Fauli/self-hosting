@@ -60,3 +60,30 @@ env:
 #   torrentblackhole:
 #     enabled: false
 #     mountPath: /downloads
+
+persistence:
+  # -- Default persistence for configuration files.
+  # @default -- See below
+  config:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Sets the persistence type
+    # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+    type: pvc
+    mountPath: /config
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    # storageClass: synology-nfs-csi-postgres
+    # size: 10Gi
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: torrent-pvc  # your-claim
+    # -- Used in conjunction with `existingClaim`. Specifies a sub-path inside the referenced volume instead of its root
+    subPath: jackett # some-subpath
+    accessMode: ReadWriteOnce
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
