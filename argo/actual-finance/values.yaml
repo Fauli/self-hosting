@@ -175,7 +175,10 @@ ingress:
   # -- Any additional paths that may need to be added to the ingress under the main host
   extraPaths: []
   # -- The tls configuration for additional hostnames to be covered with this ingress record.
-  extraTls: []
+  extraTls: 
+    - hosts:
+        - finance.gute-idee.me
+      secretName: origin-cert
   # -- Additional rules to be covered with this ingress record
   extraRules: []
 

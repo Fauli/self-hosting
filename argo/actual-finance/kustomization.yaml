@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  # - actual-finnce-secret-origin-cert.yaml
+  - finance-secret-origin-cert.yaml
 
 namespace: actual-finance
 
