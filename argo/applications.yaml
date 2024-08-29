@@ -22,6 +22,7 @@ spec:
     path: argo/csi-driver-nfs
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-nginx
@@ -33,6 +34,7 @@ spec:
     path: argo/nginx
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: jellyfin
@@ -44,6 +46,7 @@ spec:
     path: argo/jellyfin
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kanboard
@@ -55,6 +58,7 @@ spec:
     path: argo/kanboard
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: metallb
@@ -66,6 +70,7 @@ spec:
     path: argo/metallb
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: metrics-server
@@ -77,6 +82,7 @@ spec:
     path: argo/metrics-server
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nextcloud
@@ -88,17 +94,20 @@ spec:
     path: argo/nextcloud
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: postgres
   namespace: argo-cd
 spec:
+  project: default
   destination:
     server: https://kubernetes.default.svc
   source:
     path: argo/postgres-operator
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: postgres-ui
@@ -110,11 +119,13 @@ spec:
     path: argo/postgres-operator-ui
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prometheus
   namespace: argo-cd
 spec:
+  project: default
   destination:
     server: https://kubernetes.default.svc
   source:
@@ -132,14 +143,29 @@ spec:
 #     path: argo/registry
 #     repoURL: https://github.com/Fauli/self-hosting.git
 # ---
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: fauli-apps
   namespace: argo-cd
 spec:
+  project: default
   destination:
     server: https://kubernetes.default.svc
   source:
     path: argo/fauli-apps
+    repoURL: https://github.com/Fauli/self-hosting.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: actual-finance
+  namespace: argo-cd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    path: argo/actual-finance
     repoURL: https://github.com/Fauli/self-hosting.git
 ---
