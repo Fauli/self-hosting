@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - pvc.yaml
   # - actual-finnce-secret-origin-cert.yaml
 
 namespace: actual-finance

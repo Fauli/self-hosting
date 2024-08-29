@@ -128,11 +128,13 @@ persistence:
     #    https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#persistentvolumeclaim-v1-core
     #    for structural reference)
     volumeClaimSpec:
+      storageClassName: synology-nfs-csi-retain-keep-permissions
+      volumeMode: Filesystem
       accessModes:
         - ReadWriteOnce
       resources:
         requests:
-          storage: 2Gi
+          storage: 10Gi
 
 service:
   # -- Service type
