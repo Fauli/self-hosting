@@ -1,0 +1,388 @@
+# Default values for home-assistant.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of replicas for the deployment
+replicaCount: 1
+
+# Image settings
+image:
+  # Repository for the Home Assistant image
+  repository: ghcr.io/home-assistant/home-assistant
+  # Image pull policy
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# List of imagePullSecrets for private image repositories
+imagePullSecrets: []
+# Override the default name of the Helm chart
+nameOverride: ""
+# Override the default full name of the Helm chart
+fullnameOverride: ""
+
+# Service account settings
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# Annotations to add to the pod
+podAnnotations: {}
+
+# Pod security context settings
+podSecurityContext:
+  {}
+  # runAsUser: 568
+  # runAsGroup: 568
+  # fsGroup: 568
+  # fsGroupChangePolicy: "OnRootMismatch"
+
+# Environment variables
+env: []
+# - name: TZ
+#   value: Europe/Prague
+# - name: SOME_VAR_FROM_CONFIG_MAP
+#   valueFrom:
+#     configMapRef:
+#       name: configmap-name
+#       key: config-key
+# - name: SOME_SECRET
+#   valueFrom:
+#     secretKeyRef:
+#       name: secret-name
+#       key: secret-key
+
+# Use environment variables from ConfigMaps or Secrets
+envFrom: []
+# - configMapRef:
+#     name: config-map-name
+# - secretRef:
+#     name: secret-name
+
+hostPort:
+  # Enable 'hostPort' or not
+  enabled: false
+  port: 8123
+
+# Specifies if the containers should be started in hostNetwork mode.
+#
+# Required for use auto-discovery feature of Home Assistant
+hostNetwork: false
+
+# Set the dnsPolicy (you'll want ClusterFirstWithHostNet if running on hostNetwork to reac
+# other k8s services via DNS
+# dnsPolicy: ClusterFirst
+
+# Container security context settings
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# Pod's DNS Configuration
+# https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+# This value is useful if you need to reduce the DNS load: set "ndots" to 0 and only use FQDNs.
+dnsConfig: {}
+  # nameservers:
+  #   - 1.2.3.4
+  # searches:
+  #   - ns1.svc.cluster-domain.example
+  #   - my.dns.search.suffix
+  # options:
+  #   - name: ndots
+  #     value: "2"
+
+# Service settings
+service:
+  # Service type (ClusterIP, NodePort, LoadBalancer, or ExternalName)
+  type: ClusterIP
+  # Service port
+  port: 8080
+  # Annotations to add to the service
+  annotations: {}
+
+# Ingress settings
+ingress:
+  # Enable ingress for home assistant
+  enabled: false
+  className: "nginx"
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# Resource settings for the container
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Node selector settings for scheduling the pod on specific nodes
+nodeSelector: {}
+
+# Tolerations settings for scheduling the pod based on node taints
+tolerations: []
+
+# Affinity settings for controlling pod scheduling
+affinity: {}
+
+initContainers: []
+  # - name: init-myservice
+  #   image: busybox
+  #   command: ['sh', '-c', 'until nslookup myservice; do echo waiting for myservice; sleep 2; done;']
+
+# Configuration for Home Assistant
+configuration:
+  # Enable or disable the configuration setup for Home Assistant
+  enabled: false
+  # Force init will merge the current configuration file with the default configuration on every start
+  # This is useful when you want to ensure that the configuration file is always up to date
+  forceInit: false
+  # List of trusted proxies in the format of CIDR notation in a case of using a reverse proxy
+  # Here is the list of the most common private IP ranges, use your list of possible trusted proxies, usually, it's the IP of the reverse proxy
+  trusted_proxies:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 127.0.0.0/8
+  # Template for the configuration.yaml file
+  # Used the `tpl` function to render the template, so you can use Go template functions
+  templateConfig: |-
+    # Loads default set of integrations. Do not remove.
+    default_config:
+
+    {{- if .Values.ingress.enabled }}
+    http:
+      use_x_forwarded_for: true
+      trusted_proxies:
+        {{- range .Values.configuration.trusted_proxies }}
+        - {{ . }}
+        {{- end }}
+    {{- end}}
+    # Load frontend themes from the themes folder
+    frontend:
+      themes: !include_dir_merge_named themes
+
+    automation: !include automations.yaml
+    script: !include scripts.yaml
+    scene: !include scenes.yaml
+
+  # Init script for the Home Assistant initialization, you can use Go template functions
+  # Script is executed before the Home Assistant container starts and is used to prepare the configuration
+  # Will be executed only if the configuration.enabled is set to true
+  initScript: |-
+    #!/bin/bash
+    set -e
+
+    # Check if the configuration file exists
+    if [ ! -f /config/configuration.yaml ]; then
+      echo "Configuration file not found, creating a new one"
+      cp /config-templates/configuration.yaml /config/configuration.yaml
+    fi
+
+    # Check if the force init is enabled
+    forceInit="{{ .Values.configuration.forceInit }}"
+    if [ "$forceInit" = "true" ]; then
+      echo "Force init is enabled, overwriting the configuration file"
+      current_time=$(date +%Y%m%d_%H%M%S)
+      echo "Backup the current configuration file to configuration.yaml.$current_time"
+      cp /config/configuration.yaml /config/configuration.yaml.$current_time
+      echo "The current configuration file will be merged with the default configuration file with this content:"
+      cat /config-templates/configuration.yaml
+      if [[ ! -s /config/configuration.yaml ]]; then
+        # If /config/configuration.yaml is empty, use the content of /config-templates/configuration.yaml
+        cat /config-templates/configuration.yaml > /config/configuration.yaml
+      else
+        # Perform the merge operation if /config/configuration.yaml is not empty
+        yq eval-all --inplace 'select(fileIndex == 0) *d select(fileIndex == 1)' /config/configuration.yaml /config-templates/configuration.yaml
+      fi
+    fi
+
+    # Check if the automations file exists
+    if [ ! -f /config/automations.yaml ]; then
+      echo "Automations file not found, creating a new one"
+      touch /config/automations.yaml
+      echo "[]" >> /config/automations.yaml
+    fi
+
+    # Check if the scripts file exists
+    if [ ! -f /config/scripts.yaml ]; then
+      echo "Scripts file not found, creating a new one"
+      touch /config/scripts.yaml
+    fi
+
+    # Check if the scenes file exists
+    if [ ! -f /config/scenes.yaml ]; then
+      echo "Scenes file not found, creating a new one"
+      touch /config/scenes.yaml
+    fi
+
+  initContainer:
+    name: setup-config
+    image: mikefarah/yq:4
+    securityContext:
+      runAsUser: 0
+    command: ["/bin/sh", "-c"]
+    args:
+    - /bin/sh /mnt/init/init.sh
+    # env:
+    # - name: FORCE_INIT
+    #   valueFrom:
+    #     configMapKeyRef:
+    #       name: init-script
+    #       key: forceInit
+    # Home Assistant configuration volume will be mounted to /config automatically
+    volumeMounts:
+      - name: init-volume
+        mountPath: /mnt/init/init.sh
+        subPath: init.sh
+      - name: config-volume
+        mountPath: /config-templates
+
+# Persistence values for the Home Assistant instance
+persistence:
+  # Enable or disable persistence
+  enabled: true
+  # Access mode for the persistent volume claim
+  accessMode: ReadWriteOnce
+  # Size of the persistent volume claim
+  size: 10Gi
+  # Storage class for the persistent volume claim
+  storageClass: "synology-nfs-csi-retain-keep-permissions"
+  # Name of the existing volume claim for the stateful set, this option can be used to use existing volumes
+  # existingVolume: ""
+  ## Persistent Volume selectors
+  ## https://kubernetes.io/docs/concepts/storage/persistent-volumes/#selector
+  # matchLabels: {}
+  # matchExpressions: {}
+
+# if you need any additional volumes, you can define them here
+additionalVolumes: []
+  # - hostPath:
+  #     path: >-
+  #       /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
+  #     type: CharDevice
+  #   name: usb
+# if you need any additional volume mounts, you can define them here
+additionalMounts: []
+  # - mountPath: /dev/ttyACM0
+  #   name: usb
+
+# if you need to expose additional ports
+additionalPorts: []
+#  - name: sia
+#    containerPort: 8124
+#    protocol: TCP
+
+# if you need to expose additional services
+additionalServices: []
+#  - name: sia
+#    port: 8124
+#    targetPort: sia
+#    type: NodePort
+#    protocol: TCP
+#    nodePort: 30124
+
+livenessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /
+    port: http
+    scheme: HTTP
+  periodSeconds: 20
+  successThreshold: 1
+  timeoutSeconds: 2
+readinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /
+    port: http
+    scheme: HTTP
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+startupProbe: {}
+  # initialDelaySeconds: 1
+  # periodSeconds: 5
+  # timeoutSeconds: 1
+  # successThreshold: 1
+  # failureThreshold: 1
+  # httpGet:
+  #   scheme: HTTP
+  #   path: /
+  #   port: http
+
+serviceMonitor:
+  # requires HA integration:  https://www.home-assistant.io/integrations/prometheus/
+  enabled: false
+  scrapeInterval: 30s
+  labels: {}
+
+# Addons configuration for additional services
+addons:
+  # Code-server addon configuration
+  codeserver:
+    # Enable or disable the code-server addon
+    enabled: false
+    # Resource settings for the code-server container
+    resources: {}
+    # Image settings for the code-server addon
+    image:
+      # Repository for the code-server image
+      repository: ghcr.io/coder/code-server
+      # Image pull policy for the code-server image
+      pullPolicy: IfNotPresent
+      # Tag for the code-server image
+      tag: "4.92.2"
+    # Service settings
+    service:
+      # Service type (ClusterIP, NodePort, LoadBalancer, or ExternalName)
+      type: ClusterIP
+      # Service port
+      port: 12321
+    # Ingress settings for the code-server addon
+    ingress:
+      # Enable or disable the ingress for the code-server addon
+      enabled: false
+      # Ingress class name
+      className: ""
+      # Ingress annotations
+      annotations: {}
+      # Ingress hosts configuration
+      hosts:
+        - host: chart-example.local
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      # Ingress TLS configuration
+      tls: []
+    # if you need any additional volume mounts, you can define them here
+    additionalMounts: []
+      # - mountPath: /home/coder/.ssh/id_rsa
+      #   name: id-rsa
