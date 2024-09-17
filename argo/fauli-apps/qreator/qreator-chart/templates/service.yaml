@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: qreator
+  labels:
+    app: qreator
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: qreator

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: qreator
+description: A Helm chart for deploying the Qreator Tandaradei Party Entry Manager
+version: 0.1.0
+appVersion: "0.0.1"

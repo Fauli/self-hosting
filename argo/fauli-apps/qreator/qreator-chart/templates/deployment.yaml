@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qreator
+  labels:
+    app: qreator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qreator
+  template:
+    metadata:
+      labels:
+        app: qreator
+    spec:
+      containers:
+        - name: qreator
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ADMIN_EMAIL
+              value: "{{ .Values.env.ADMIN_EMAIL }}"
+            - name: SESSION_KEY
+              value: "{{ .Values.env.SESSION_KEY }}"
+            - name: QREATOR_DEBUG
+              value: "{{ .Values.env.QREATOR_DEBUG }}"
+            - name: UI_PATH
+              value: "{{ .Values.env.UI_PATH }}"
+            - name: SERVER_AND_PORT
+              value: "{{ .Values.env.SERVER_AND_PORT }}"
+            - name: EVENT_TAG
+              value: "{{ .Values.env.EVENT_TAG }}"
+            - name: MAILCHIMP_API_KEY
+              value: "{{ .Values.env.MAILCHIMP_API_KEY }}"
+            - name: MAILCHIMP_LIST_ID
+              value: "{{ .Values.env.MAILCHIMP_LIST_ID }}"
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+      imagePullSecrets:
+        - name: regcred

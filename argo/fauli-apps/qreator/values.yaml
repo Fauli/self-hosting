@@ -1,0 +1,33 @@
+image:
+  repository: docker.io/fauli/qreator
+  tag: "0.0.1"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  hosts:
+    - host: qcreator.fauli
+      paths:
+        - /
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+env:
+  ADMIN_EMAIL: ""
+  SESSION_KEY: ""
+  QREATOR_DEBUG: "false"
+  UI_PATH: ""
+  SERVER_AND_PORT: ""
+  EVENT_TAG: ""
+  MAILCHIMP_API_KEY: ""
+  MAILCHIMP_LIST_ID: ""

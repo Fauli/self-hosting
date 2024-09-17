@@ -1,0 +1,16 @@
+# S3 compatible storage
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+
+namespace: minio-tenant
+
+helmCharts:
+- name: tenant
+  version: "6.0.2"
+  repo: https://operator.min.io
+  releaseName: tenant
+  valuesFile: values.yaml
+

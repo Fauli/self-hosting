@@ -21,13 +21,13 @@
   - [ArgoCD](#argocd)
     - [Configure Argo to snyc apps](#configure-argo-to-snyc-apps)
   - [DNS](#dns)
-  - [Torrent](#torrent)
   - [Kubeseal](#kubeseal)
-  - [Image registry on the NAS](#image-registry-on-the-nas)
+  - [Image registry on the NAS? In the cluster? Dockerhub?](#image-registry-on-the-nas-in-the-cluster-dockerhub)
+  - [Cloudflare](#cloudflare)
   - [Use cilium to protect network further](#use-cilium-to-protect-network-further)
   - [Gateway API](#gateway-api)
-  - [Cloudflare](#cloudflare)
   - [PXE Boot](#pxe-boot)
+  - [Torrent](#torrent)
 
 # Introduction
 
@@ -316,10 +316,6 @@ add address=10.13.37.137 comment=fauli-cluster name=pi-hole.fauli
 add address=10.13.37.137 comment=fauli-cluster name=alertmanager.fauli
 ```
 
-## Torrent
-
-jackett, sonarr, radarr, ...
-
 ## Kubeseal
 
 Can be used so safely store passwords and keys in GIT.
@@ -347,19 +343,20 @@ kubeseal --format=yaml --controller-namespace sealed-secrets --controller-name s
 
 ```
 
+## Image registry on the NAS? In the cluster? Dockerhub?
 
+Given that my code is open-source, contains no secrets, and in order to keep complexity low, dockerhub has been used to host images.
 
-## Image registry on the NAS
+The images are mainly created on a Macbook and therefor need to be built using the below commands:
 
-Is that smart? Where else?
+```bash
+# login only required initially
+docker login
 
-## Use cilium to protect network further
-
-Do it
-
-## Gateway API
-
-Maybe worth from the start?
+# when building and pushing
+docker buildx build --platform linux/amd64 . -t fauli/program:0.0.1
+docker push fauli/program:0.0.1
+```
 
 ## Cloudflare
 
@@ -407,7 +404,18 @@ add chain=forward protocol=tcp dst-address=10.13.37.137 dst-port=80,443 action=d
 
 ```
 
+## Use cilium to protect network further
+
+Do it
+
+## Gateway API
+
+Maybe worth from the start?
 
 ## PXE Boot
 
 Makes life easier maybe?
+
+## Torrent
+
+jackett, sonarr, radarr, ...
