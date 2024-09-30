@@ -423,6 +423,9 @@ jackett, sonarr, radarr, ...
 
 # Physical Network
 
+Since I moved into a house with 4 stories (incl. basement) I had to also re-thing my physical setup.
+Below is the final design.
+
 ![Network Diagram](.attachements/home-network.drawio.png)
 
 Router:  https://www.digitec.ch/de/s1/product/mikrotik-ccr2004-16g-2spc-router-20737729
