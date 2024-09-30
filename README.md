@@ -28,6 +28,7 @@
   - [Gateway API](#gateway-api)
   - [PXE Boot](#pxe-boot)
   - [Torrent](#torrent)
+- [Physical Network](#physical-network)
 
 # Introduction
 
@@ -50,18 +51,18 @@ In order to separate the internal personal LAN from the cluster, a new VLAN is c
 
 The Kubernetes nodes are connected via the physical ports on the router.
 
-| Interface    | Connected | VLAN | Bridge     |
-| ------------ | --------- | ---- | ---------- |
-| Interface 1  | Personal  | 10   | pc-bridge  |
-| Interface 2  | Personal  | 10   | pc-bridge  |
-| Interface 3  | Personal  | 10   | pc-bridge  |
-| Interface 4  | Personal  | 10   | pc-bridge  |
-| Interface 5  | Personal  | 10   | pc-bridge  |
-| Interface 6  | Personal  | 10   | pc-bridge  |
-| Interface 7  | Cluster   | 10   | k8s-bridge |
-| Interface 8  | Cluster   | 20   | k8s-bridge |
-| Interface 9  | Cluster   | 20   | k8s-bridge |
-| Interface 10 | Cluster   | 20   | k8s-bridge |
+| Interface    | Connected | VLAN | Bridge          |
+| ------------ | --------- | ---- | --------------- |
+| Interface 1  | Personal  | 10   | pc-bridge       |
+| Interface 2  | Personal  | 10   | pc-bridge       |
+| Interface 3  | Personal  | 10   | pc-bridge       |
+| Interface 4  | Personal  | 10   | pc-bridge       |
+| Interface 5  | Personal  | 10   | pc-bridge       |
+| Interface 6  | Personal  | 10   | pc-bridge       |
+| Interface 7  | Cluster   | 10   | k8s-bridge      |
+| Interface 8  | Cluster   | 20   | k8s-bridge      |
+| Interface 9  | Cluster   | 20   | k8s-bridge      |
+| Interface 10 | Personal   | 20  | pc-bridge (PoE) |
 
 ## Logical network diagram
 
@@ -419,3 +420,7 @@ Makes life easier maybe?
 ## Torrent
 
 jackett, sonarr, radarr, ...
+
+# Physical Network
+
+![Network Diagram](.attachements/home-network.drawio.png)
