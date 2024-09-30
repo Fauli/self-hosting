@@ -29,6 +29,7 @@
   - [PXE Boot](#pxe-boot)
   - [Torrent](#torrent)
 - [Physical Network](#physical-network)
+  - [New hardware](#new-hardware)
 
 # Introduction
 
@@ -428,12 +429,13 @@ Below is the final design.
 
 ![Network Diagram](.attachements/home-network.drawio.png)
 
-Router:  https://www.digitec.ch/de/s1/product/mikrotik-ccr2004-16g-2spc-router-20737729
+## New hardware
 
-Adapter: https://www.brack.ch/mikrotik-sfp-plus-modul-s-plus-rj10-10g-rj-45-kupfer-636107
-
-Switch:  https://www.digitec.ch/de/s1/product/trendnet-teg-s750-5-ports-netzwerk-switch-22658232
-
-APs:     https://www.galaxus.ch/en/s1/product/ubiquiti-access-point-unifi-6-professional-u6-pro-4800-mbits-access-points-18253952
-
+| Type        | Link                                                                                                           |
+|-------------|----------------------------------------------------------------------------------------------------------------|
+| Router      | [Mikrotik CCR2004-16G-2S+PC](https://www.digitec.ch/de/s1/product/mikrotik-ccr2004-16g-2spc-router-20737729)   |
+| Adapter     | [Mikrotik SFP+ Modul S+RJ10](https://www.brack.ch/mikrotik-sfp-plus-modul-s-plus-rj10-10g-rj-45-kupfer-636107) |
+| Switch      | [Trendnet TEG-S750](https://www.digitec.ch/de/s1/product/trendnet-teg-s750-5-ports-netzwerk-switch-22658232)   |
+| APs         | [Ubiquiti Access Point UniFi 6 Pro](https://www.galaxus.ch/en/s1/product/ubiquiti-access-point-unifi-6-professional-u6-pro-4800-mbits-access-points-18253952) |
+| PoE adapter | [Ubiquiti U-POE-AT](https://www.galaxus.ch/en/s1/product/ubiquiti-u-poe-at-poe-injector-network-accessories-16132503) |
 
