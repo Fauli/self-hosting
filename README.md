@@ -424,3 +424,9 @@ jackett, sonarr, radarr, ...
 # Physical Network
 
 ![Network Diagram](.attachements/home-network.drawio.png)
+
+Router:  https://www.digitec.ch/de/s1/product/mikrotik-ccr2004-16g-2spc-router-20737729
+Adapter: https://www.brack.ch/mikrotik-sfp-plus-modul-s-plus-rj10-10g-rj-45-kupfer-636107
+Switch:  https://www.digitec.ch/de/s1/product/trendnet-teg-s750-5-ports-netzwerk-switch-22658232
+APs:     https://www.galaxus.ch/en/s1/product/ubiquiti-access-point-unifi-6-professional-u6-pro-4800-mbits-access-points-18253952
+
