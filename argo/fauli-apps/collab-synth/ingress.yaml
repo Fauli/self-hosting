@@ -13,7 +13,7 @@ spec:
           service:
             name: collab-synth
             port:
-              number: 80
+              number: 8080
   tls:
   - hosts:
     - collab-synth.gute-idee.me
