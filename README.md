@@ -28,6 +28,8 @@
   - [Gateway API](#gateway-api)
   - [PXE Boot](#pxe-boot)
   - [Torrent](#torrent)
+- [Physical Network](#physical-network)
+  - [New hardware](#new-hardware)
 
 # Introduction
 
@@ -50,18 +52,18 @@ In order to separate the internal personal LAN from the cluster, a new VLAN is c
 
 The Kubernetes nodes are connected via the physical ports on the router.
 
-| Interface    | Connected | VLAN | Bridge     |
-| ------------ | --------- | ---- | ---------- |
-| Interface 1  | Personal  | 10   | pc-bridge  |
-| Interface 2  | Personal  | 10   | pc-bridge  |
-| Interface 3  | Personal  | 10   | pc-bridge  |
-| Interface 4  | Personal  | 10   | pc-bridge  |
-| Interface 5  | Personal  | 10   | pc-bridge  |
-| Interface 6  | Personal  | 10   | pc-bridge  |
-| Interface 7  | Cluster   | 10   | k8s-bridge |
-| Interface 8  | Cluster   | 20   | k8s-bridge |
-| Interface 9  | Cluster   | 20   | k8s-bridge |
-| Interface 10 | Cluster   | 20   | k8s-bridge |
+| Interface    | Connected | VLAN | Bridge          |
+| ------------ | --------- | ---- | --------------- |
+| Interface 1  | Personal  | 10   | pc-bridge       |
+| Interface 2  | Personal  | 10   | pc-bridge       |
+| Interface 3  | Personal  | 10   | pc-bridge       |
+| Interface 4  | Personal  | 10   | pc-bridge       |
+| Interface 5  | Personal  | 10   | pc-bridge       |
+| Interface 6  | Personal  | 10   | pc-bridge       |
+| Interface 7  | Cluster   | 10   | k8s-bridge      |
+| Interface 8  | Cluster   | 20   | k8s-bridge      |
+| Interface 9  | Cluster   | 20   | k8s-bridge      |
+| Interface 10 | Personal   | 20  | pc-bridge (PoE) |
 
 ## Logical network diagram
 
@@ -419,3 +421,24 @@ Makes life easier maybe?
 ## Torrent
 
 jackett, sonarr, radarr, ...
+
+# Physical Network
+
+Since I moved into a house with 4 stories (incl. basement) I had to also re-think my physical setup.
+Below is the final design.
+
+![Network Diagram](.attachements/home-network.drawio.png)
+
+## New hardware
+
+| Type          | Link                                                                                                                        |
+|---------------|-----------------------------------------------------------------------------------------------------------------------------|
+| Router        | [Mikrotik CCR2004-16G-2S+PC](https://www.galaxus.ch/de/s1/product/mikrotik-ccr2004-16g-2spc-router-20737729)                |
+| Adapter       | [Mikrotik SFP+ Modul S+RJ10](https://www.galaxus.ch/de/s1/product/tp-link-tl-sm5310-t-transceiver-21427922?supplier=406802) |
+| Switch        | [Trendnet TEG-S750](https://www.galaxus.ch/de/s1/product/trendnet-teg-s750-5-ports-netzwerk-switch-22658232)                |
+| APs           | [Ubiquiti Access Point UniFi 6+](https://www.galaxus.ch/en/s1/product/ubiquiti-u6-2402-mbits-access-points-36025360)        |
+| PoE adapter   | [Ubiquiti U-POE-AT](https://www.galaxus.ch/en/s1/product/ubiquiti-u-poe-at-poe-injector-network-accessories-16132503)       |
+| Ethernet card | [TP-Link TX401](https://www.galaxus.ch/de/s1/product/tp-link-tx401-ethernet-rj45-netzwerkkarte-14134328?supplier=406802)    |
+
+
+
