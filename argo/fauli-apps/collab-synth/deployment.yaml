@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: collaborative-synth
+  name: collab-synth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: collaborative-synth
+      app: collab-synth
   template:
     metadata:
       labels:
-        app: collaborative-synth
+        app: collab-synth
     spec:
       containers:
       - name: app
