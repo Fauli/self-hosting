@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: fauli/collab-synth:0.0.1
+        image: fauli/collab-synth:0.0.2
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
