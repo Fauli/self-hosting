@@ -13,6 +13,7 @@
 - [Kubernetes](#kubernetes)
   - [Kubernetes Node Setup](#kubernetes-node-setup)
   - [Kubernetes Components](#kubernetes-components)
+  - [Storage Server](#storage-server)
 - [Additional Thoughts](#additional-thoughts)
   - [Make wireguard great again](#make-wireguard-great-again)
   - [Cluster Setup](#cluster-setup)
@@ -73,13 +74,13 @@ The Kubernetes nodes are connected via the physical ports on the router.
 
 | Chain   | Source | Destination | Port        | Protocol | Action     | Description                |
 | ------- | ------ | ----------- | ----------- | -------- | ---------- | -------------------------- |
-| forward | VLAN10 | VLAN20      | 8006        | TCP      | accept     | Proxmox interface          |
-| forward | VLAN10 | VLAN20      | 22          | TCP      | accept     | SSH access to nodes        |
-| forward | VLAN10 | VLAN20      | 6443        | TCP      | accept     | API Server                 |
-| forward | VLAN10 | VLAN20      | 30000-32767 | TCP      | accept     | Access to exposed services |
-| forward | VLAN20 | VLAN10      | 2049        | TCP/UDP  | accept     | NFS4 access for CSI driver |
-| srcnat  | VLAN10 | WAN         | -           | -        | masquerade | NAT for internet access    |
-| srcnat  | VLAN20 | WAN         | -           | -        | masquerade | NAT for internet access    |
+| forward | pc-bridge | k8s-bridge      | 8006        | TCP      | accept     | Proxmox interface          |
+| forward | pc-bridge | k8s-bridge      | 22          | TCP      | accept     | SSH access to nodes        |
+| forward | pc-bridge | k8s-bridge      | 6443        | TCP      | accept     | API Server                 |
+| forward | pc-bridge | k8s-bridge      | 30000-32767 | TCP      | accept     | Access to exposed services |
+| forward | k8s-bridge | pc-bridge      | 2049        | TCP/UDP  | accept     | NFS4 access for CSI driver |
+| srcnat  | pc-bridge | WAN         | -           | -        | masquerade | NAT for internet access    |
+| srcnat  | k8s-bridge | WAN         | -           | -        | masquerade | NAT for internet access    |
 
 ## Steps to setup the configuration
 ```bash
@@ -166,6 +167,10 @@ set [find interface=ether10] bridge=k8s-bridge
 | Metrics | Grafana & Prometheus |   |
 | Security validation | kube-bench |  |
 | Admin | kubernetes dashboard | | 
+
+## Storage Server
+
+tbd
 
 # Additional Thoughts
 
@@ -428,6 +433,8 @@ Since I moved into a house with 4 stories (incl. basement) I had to also re-thin
 Below is the final design.
 
 ![Network Diagram](.attachements/home-network.drawio.png)
+
+The bold connetion between my router and the switch and from the switch to my PC is 10Gb.
 
 ## New hardware
 
